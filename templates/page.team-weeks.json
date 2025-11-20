@@ -1,0 +1,534 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "91043cf2-4396-4e8d-afd2-cc06fb083ee4": {
+      "type": "slideshow",
+      "blocks": {
+        "template--15646920868026__91043cf2-4396-4e8d-afd2-cc06fb083ee4-image-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Brand_Banner_Saturday_skin.png",
+            "mobile_image": "shopify://shop_images/Brand_Banner_Saturday_skin_3a86181b-7491-4605-93ce-fd301929a4c5.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 1), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "template--15646920868026__91043cf2-4396-4e8d-afd2-cc06fb083ee4-image-2"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "fill",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_aBJeyc": {
+      "type": "rich-text",
+      "blocks": {
+        "richtext_3fq4hQ": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Denna veckan får ni digitala vykort från några av tjejerna i teamet. Nedan kan ni läsa mer om deras must-haves i sommar. <br/><br/>Ps. Spana in vår <a href=\"https://www.instagram.com/glowid/?hl=en\" title=\"https://www.instagram.com/glowid/?hl=en\">Instagram</a> för att ta del av tjejernas vykort från semestern.  💌</p>"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_3fq4hQ"
+      ],
+      "custom_css": [
+        "a {color: #f3afc9;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-d41c5226-9dee-4ae0-9a79-6aa882aff2f4",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "ce7d3ba6-c4b1-47ef-b936-65953f85d268": {
+      "type": "slideshow",
+      "blocks": {
+        "image_BqNq8j": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1_c6860e77-80a2-4f9a-97fa-9a4fdcfd1e18.png",
+            "mobile_image": "shopify://shop_images/1_f5caff95-2afa-4830-9eb2-7bbfa5e9bfd8.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 1), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_BqNq8j"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "fill",
+        "show_initial_transition": false,
+        "autoplay": false,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_Pmq3kV": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_i4gwGz": {
+          "type": "heading",
+          "settings": {
+            "text": "Myra",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_wwpAkP": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Mitt mål med min hudvårdsrutin har alltid varit att få känna mig återfuktad, men också att jobba för en jämnare hudton, hudstruktur och en fin naturlig lyster! Mina sommarfavoriter är några som jag aldrig skulle vilja vara utan.<a href=\"/products/advanced-snail-radiance-dual-essence\" title=\"Advanced Snail Radiance Dual Essence\"> Advanced Dual Snail Essence</a> är keeper! Denna essence återfuktar, plumpar, reparerar och reducerar röd och irriterad hud. Men inte nog med det så jobbar den även utjämnande, balanserande och förbättrar elasticiteten i huden! Jag har använt den regelbundet i min rutin i sommar!</p><p><a href=\"/products/erbjudande-vegan-kombucha-tea-essence\" title=\"Vegan Kombucha Tea Essence\">Vegan Kombucha Tea Essence </a>är en favorit hos många av er, och även för mig. Den återfuktar min torra hud på djupet och bistår med så mycket glow. Beroende på hur torr jag är, älskar jag att klappa in den i flera lager! Och sist men inte minst, <a href=\"/products/rich-moist-soothing-cream\" title=\"Rich Moist Soothing Cream 80ml\">Rich Moist Soothing Cream</a> – en favorit som jag har använt dagligen i sommar. Den låser in fukten i huden från tidigare lager och stärker min hudbarriär!<br/><br/>xx Myra</p><p></p><p></p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_i4gwGz",
+        "richtext_wwpAkP"
+      ],
+      "custom_css": [
+        ".prose a {background: none; color: #f3afc9; text-decoration: underline;}",
+        ".prose a:hover {color: black; transition: color 0.2s;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-d41c5226-9dee-4ae0-9a79-6aa882aff2f4",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "slideshow_wb4QCL": {
+      "type": "slideshow",
+      "blocks": {
+        "image_ha68xL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2_bb8d0aae-f9b8-4425-bd42-b9938e5e9ee2.png",
+            "mobile_image": "shopify://shop_images/2_b0d8cf9f-37a0-4a2a-b933-7d87204690b0.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 1), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_ha68xL"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "fill",
+        "show_initial_transition": false,
+        "autoplay": false,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_7WcM8E": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_rdeWUE": {
+          "type": "heading",
+          "settings": {
+            "text": "Kristina",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_J6t6x6": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Hudvård är för mig ett sätt att ta hand om mig själv, och därför väljer jag mina produkter med omsorg. <a href=\"/products/natural-repair-serum\" title=\"Natural Repair Serum 120ml\">Natural Repair Serum</a> är en av mina sommarfavoriter. Den återfuktar, minimerar fina linjer och lugnar huden. När det gäller rengöring är <a href=\"/products/acai-berry-oats-gel-cleanser\" title=\"Acai Berry Oats Gel Cleanser\">Acai Berry Oat Cleanser</a> så härlig – den kombinerar närande och lugnande ingredienser, vilket gör att min hud känns både ren och återfuktad. Dessutom är förpackningen lyxig, med pump och glasflaska, vilket ger det där lilla extra.<br/><br/>Jag brukar skämma bort mig själv med <a href=\"/products/klairs-gentle-black-sugar-facial-polish\" title=\"Gentle Black Sugar Facial Polish\">Gentle Black Sugar Polish </a>och jag älskar att använda den som en mask. Den har gett mig en härlig spa-känsla i sommar och gör min hud så mjuk och len efter användning. Under sommarmånaderna unnar jag mig masken ett par gånger i veckan för att djuprengöra huden och få bort alla rester från SPF. <br/><br/>Har ni inte testat denna förut ska rekommenderar jag er verkligen att göra det!<br/><br/>xx Kristina</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rdeWUE",
+        "richtext_J6t6x6"
+      ],
+      "custom_css": [
+        ".prose a {background: none; color: #f3afc9; text-decoration: underline;}",
+        ".prose a:hover {color: black; transition: color 0.2s;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-d41c5226-9dee-4ae0-9a79-6aa882aff2f4",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "slideshow_WbGCHB": {
+      "type": "slideshow",
+      "blocks": {
+        "image_RCUaMq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3_2ad29edb-d990-435c-9ef8-75ef1cd67674.png",
+            "mobile_image": "shopify://shop_images/3_7f3860ac-6c6a-47d6-9949-07f7dcd8b3f0.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 1), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_RCUaMq"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "auto",
+        "show_initial_transition": false,
+        "autoplay": false,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_RNXeRX": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_cmXzMU": {
+          "type": "heading",
+          "settings": {
+            "text": "Linn",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_D7Wqjw": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Jag har verkligen hittat mina ultimata hudvårdsfavoriter som jag står troget fast vid i sommar och de har verkligen gjort underverk för min hud! </p><p><a href=\"/products/dr-ceuracle-tea-tree-purifine-30-cleansing-foam\" title=\"Tea Tree Purifine Cleansing Foam\">Tea Tree Cleansing Foam </a>har blivit min go-to när det gäller rengöring. Eftersom att jag har en kombinerad och acne-benägen hud så tar den bort allt smuts och orenheter utan att min hud känns torr efteråt – vilket är så viktigt för mig. Efter rengöringen sträcker jag mig alltid efter min andra favorit <a href=\"/products/cica-regan-70-cream\" title=\"Cica Regen 70 Cream\">Cica 70 Cream</a>. Den är som en kram för min hud, särskilt när den är extra känslig. Och så måste jag bara nämna min nyfunna favorit <a href=\"/products/freshly-juiced-vitamin-charging-serum\" title=\"Freshly Juiced Vitamin Charging Serum\">Freshly Juiced Vitamin Charging Serum</a>. Jag upplever att min hud har fått en klar förbättring på hudton och textur efter att jag använt denna!<br/><br/>xx Linn</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_cmXzMU",
+        "richtext_D7Wqjw"
+      ],
+      "custom_css": [
+        ".prose a {background: none; color: #f3afc9; text-decoration: underline;}",
+        ".prose a:hover {color: black; transition: color 0.2s;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-d41c5226-9dee-4ae0-9a79-6aa882aff2f4",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    },
+    "slideshow_JqLPVQ": {
+      "type": "slideshow",
+      "blocks": {
+        "image_33icAc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/4_5cadad18-6522-4efc-9f5a-28a61fb1c3b9.png",
+            "mobile_image": "shopify://shop_images/4_5f684e8e-1c0d-49a4-8311-26c95f05981b.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 1), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_33icAc"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "fill",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_nbhA8X": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_BLeN8Q": {
+          "type": "heading",
+          "settings": {
+            "text": "Jennifer",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_HCqQWp": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>För mitt hår och min hud älskar jag att använda produkter som ger synliga resultat. <a href=\"/products/anti-yellow-shampoo\" title=\"Anti-Yellow Shampoo\">Anti Yellow Shampoo</a> från La’dor är en av mina favoriter, det neutraliserar effektivt gula toner i mitt hår och ger det en fräsch nyans. Jag använder också <a href=\"/products/rice-toner\" title=\"Rice Toner\">Rice Toner</a>, som med sitt risextrakt ljusar upp och jämnar ut min hudton, samtidigt som den återfuktar. <a href=\"/products/ccc-cream-medium-light\" title=\"CCC Cream Neutral Medium 206\">CCC Cream</a> är min allt-i-ett-produkt, den jämnar ut hudtonen, ger solskydd och återfuktar på samma gång – perfekt för hektiska dagar! <br/><br/>xx Jennifer </p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_BLeN8Q",
+        "richtext_HCqQWp"
+      ],
+      "custom_css": [
+        ".prose a {background: none; color: #f3afc9; text-decoration: underline;}",
+        ".prose a:hover {color: black; transition: color 0.2s;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-d41c5226-9dee-4ae0-9a79-6aa882aff2f4",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "slideshow_9iTKxm": {
+      "type": "slideshow",
+      "blocks": {
+        "image_RJtFXE": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/5_ffd6ac7c-e317-4268-bff3-b7e77ac38bad.png",
+            "mobile_image": "shopify://shop_images/5_382c2d1c-4de6-4af5-96fd-e6f1d5c2050c.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 1), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_RJtFXE"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "fill",
+        "show_initial_transition": false,
+        "autoplay": false,
+        "autoplay_pause_on_video": false,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_RgULia": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_nF9deG": {
+          "type": "heading",
+          "settings": {
+            "text": "Carolina",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_tW9VhU": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Jag är noggrann med vad jag använder för både hud och hår, och mina utvalda produkter har blivit en oumbärlig del av min dagliga rutin. <a href=\"/products/royal-vita-propolis-33-ampoule-30-ml\" title=\"Royal Vita Propolis 33 Ampoule (30ml)\">Royal Vita Propolis Ampoule</a> är verkligen glow på flaska – den ger min hud en vacker lyster samtidigt som den näring och skydd som min hud behöver.<br/><br/>När det gäller mitt hår, är <a href=\"/products/scalp-hair-peptide-strengthening-treatment\" title=\"Scalp + Hair Peptide Strengthening Treatment\">Scalp Peptide Hair Serum</a> från Saturday Skin en riktig pärla. Den har stärkt min hårbotten och fått mitt hår att kännas friskare och starkare. Jag märker också att den har stimulerat hårväxten, vilket känns fantastiskt.<br/><br/>Och till sist, men absolut inte minst: <a href=\"/products/by-wishtrend-mandelic-acid-5-skin-prep-water\" title=\"Mandelic Acid 5% Skin Prep Water (120ml)\">Mandelic Acid Skin Prep Water </a>– en mild exfoliering som tar bort döda hudceller. Jag känner verkligen att den har förvandlat min hy och jag tycker att det är så roligt att se märkbara resultat av produkterna jag använder! <br/><br/>xx Carolina</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_nF9deG",
+        "richtext_tW9VhU"
+      ],
+      "custom_css": [
+        ".prose a {background: none; color: #f3afc9; text-decoration: underline;}",
+        ".prose a:hover {color: black; transition: color 0.2s;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-d41c5226-9dee-4ae0-9a79-6aa882aff2f4",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "featured_collections_da7DF8": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_iwAUCi": {
+          "type": "collection",
+          "settings": {
+            "collection": "glowid-team-picks",
+            "products_count": 8,
+            "title": "Shoppa teamets utvalda favoriter här!",
+            "link_url": "",
+            "link_text": "View all"
+          }
+        }
+      },
+      "block_order": [
+        "collection_iwAUCi"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "Featured collection"
+      }
+    }
+  },
+  "order": [
+    "91043cf2-4396-4e8d-afd2-cc06fb083ee4",
+    "rich_text_aBJeyc",
+    "ce7d3ba6-c4b1-47ef-b936-65953f85d268",
+    "rich_text_Pmq3kV",
+    "slideshow_wb4QCL",
+    "rich_text_7WcM8E",
+    "slideshow_WbGCHB",
+    "rich_text_RNXeRX",
+    "main",
+    "slideshow_JqLPVQ",
+    "rich_text_nbhA8X",
+    "slideshow_9iTKxm",
+    "rich_text_RgULia",
+    "featured_collections_da7DF8"
+  ]
+}

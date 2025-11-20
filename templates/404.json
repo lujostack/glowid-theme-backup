@@ -1,0 +1,81 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-not-found",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "link": ""
+      }
+    },
+    "c09584bc-0d06-4671-950e-39a4a04d895b": {
+      "type": "collection-list",
+      "blocks": {
+        "675415de-f2a9-4925-87f4-ddfef8e27746": {
+          "type": "collection",
+          "settings": {
+            "color_scheme": "",
+            "collection": "bastsaljare",
+            "image": "shopify://shop_images/20220825_glowID_Ogonprodukter_2116_web_header_1500x800px_75abb546-fa77-4573-a61f-dad001f41bb5.jpg",
+            "expand_collection": false,
+            "content_position": "place-self-end-start text-start",
+            "subheading": "Upptäck bästsäljare!",
+            "title": "Bästsäljare",
+            "button_text": "Visa produkter",
+            "button_link": "",
+            "button_style": "solid",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "collection_YKVnNn": {
+          "type": "collection",
+          "settings": {
+            "color_scheme": "",
+            "collection": "alla-produkter",
+            "image": "shopify://shop_images/20220825_glowID_Hyal_Reyouth_Dr.Ceuracle_2789_web_1080x1350px.jpg",
+            "expand_collection": false,
+            "content_position": "place-self-end-start text-start",
+            "subheading": "Spring-glow!",
+            "title": "Utforska våra bästa spring-glow favoriter!",
+            "button_text": "Visa produkter",
+            "button_link": "",
+            "button_style": "solid",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "675415de-f2a9-4925-87f4-ddfef8e27746",
+        "collection_YKVnNn"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "image_size": "md",
+        "show_text_outside": false,
+        "space_items": true,
+        "stack_collections": true,
+        "collections_per_row_mobile": "1",
+        "collections_per_row_desktop": 3,
+        "subheading": "",
+        "title": "",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "c09584bc-0d06-4671-950e-39a4a04d895b"
+  ]
+}

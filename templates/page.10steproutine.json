@@ -1,0 +1,55 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "rich_text_e8qdXe": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_QwmydL": {
+          "type": "heading",
+          "settings": {
+            "text": "DEN KOREANSKA 10-STEGSRUTINEN",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_HgF3tr": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Koreaner är kända för sin strålande hud, vilket många tror beror på gener. Men det handlar om en unik hudvårdsrutin med upp till 10 steg. <br/><br/>Vi förenklar processen för dig genom att bryta ner den i steg, så att du lättare kan anpassa den till din egen hud. Antalet steg kan variera beroende på årstid, med fler steg för torr vinterhud och färre på sommaren. Resultatet blir strålande hud året runt, och det är värt att investera lite extra tid.<br/></p><p><em>En tumregel är att alltid börja med lättare konsistenser och avancera till tjockare för att låsa in fukt och näring i huden. <br/>Scrolla ner för att läsa vår 10-stegsrutin guide! </em></p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_QwmydL",
+        "richtext_HgF3tr"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    }
+  },
+  "order": [
+    "rich_text_e8qdXe",
+    "main"
+  ]
+}

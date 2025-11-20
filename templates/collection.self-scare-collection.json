@@ -1,0 +1,83 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "b84b949a-80b3-4b22-b727-af20a1a3b020": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "image": "shopify://shop_images/What_ghost_around_comes_around_header_2.png",
+        "overlay_color": "#f3afc9",
+        "overlay_opacity": 22
+      }
+    },
+    "d7fe052a-bb8a-424d-9669-9f441ed67e32": {
+      "type": "collection-list",
+      "blocks": {
+        "template--19952961847642__d7fe052a-bb8a-424d-9669-9f441ed67e32-collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "ghost-haunt",
+            "image": "shopify://shop_images/Kopia_av_Kopia_av_Ghost_Haunt_1080_x_1350_px_Presentation.png",
+            "content_position": "bottomLeft",
+            "subheading": "25% OFF CLEANSERS",
+            "title": "USE CODE: CLEANSE25",
+            "button_text": "SHOP HERE!",
+            "button_link": "shopify://collections/fuktkram"
+          }
+        },
+        "template--19952961847642__d7fe052a-bb8a-424d-9669-9f441ed67e32-collection-3": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "harprodukter",
+            "image": "shopify://shop_images/Ghost_Haunt_1080_x_1350_px.png",
+            "content_position": "bottomLeft",
+            "subheading": "TRICK OR HAIR TREATMENT?",
+            "title": "LA'DOR NEWS!",
+            "button_text": "UTFORSKA NYHETER!",
+            "button_link": "shopify://collections/harprodukter"
+          }
+        }
+      },
+      "block_order": [
+        "template--19952961847642__d7fe052a-bb8a-424d-9669-9f441ed67e32-collection-2",
+        "template--19952961847642__d7fe052a-bb8a-424d-9669-9f441ed67e32-collection-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_size": "small"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_sort_by": true,
+        "show_filters": true
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "title": "Du har tidigare tittat på"
+      }
+    },
+    "collection-banner": {
+      "type": "collection-banner",
+      "settings": {}
+    }
+  },
+  "order": [
+    "collection-banner",
+    "b84b949a-80b3-4b22-b727-af20a1a3b020",
+    "d7fe052a-bb8a-424d-9669-9f441ed67e32",
+    "main",
+    "recently-viewed-products"
+  ]
+}

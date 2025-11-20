@@ -1,0 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1730886137c15f8893": {
+      "type": "apps",
+      "blocks": {
+        "quizify_product_quiz_builder_quizify_preview_mAb3be": {
+          "type": "shopify://apps/quizify-product-quiz-builder/blocks/quizify_preview/a183a207-633e-46c0-841f-299e90a9605b",
+          "settings": {
+            "quizify_shortcode": 1
+          }
+        }
+      },
+      "block_order": [
+        "quizify_product_quiz_builder_quizify_preview_mAb3be"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    }
+  },
+  "order": [
+    "1730886137c15f8893",
+    "main"
+  ]
+}

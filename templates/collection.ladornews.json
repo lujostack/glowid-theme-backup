@@ -1,0 +1,83 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_sort_by": true,
+        "show_filters": true
+      }
+    },
+    "9dbd859f-3c93-4d99-abc1-4952db62993f": {
+      "type": "collection-list",
+      "blocks": {
+        "template--20220260090202__9dbd859f-3c93-4d99-abc1-4952db62993f-collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "harprodukter-1",
+            "image": "shopify://shop_images/20220825_glowID_Dr.Ceuracle_Scalp_DX_kit_3832_web_1080x1350px_kopia_600d2e48-efe5-42aa-80fa-7b87a38eec95.jpg",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "Utforska K-Beauty hårvård!",
+            "button_text": "View products",
+            "button_link": ""
+          }
+        },
+        "5140713e-cd93-40e5-be9e-d4da2b11cfe6": {
+          "type": "collection",
+          "settings": {
+            "collection": "lador",
+            "image": "shopify://shop_images/20211027_glowID3532_web_lowres_1080x1920px_1000x_96032b27-8750-4b28-8992-d3f0ab383917.webp",
+            "content_position": "bottomLeft",
+            "subheading": "",
+            "title": "Utforska La'dor",
+            "button_text": "View products",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--20220260090202__9dbd859f-3c93-4d99-abc1-4952db62993f-collection-3",
+        "5140713e-cd93-40e5-be9e-d4da2b11cfe6"
+      ],
+      "settings": {
+        "image_size": "normal"
+      }
+    },
+    "ed7d7535-8a81-404b-b2cf-8828313b7710": {
+      "type": "blog-posts",
+      "settings": {
+        "show_category": false,
+        "subheading": "",
+        "title": "Blog posts",
+        "button_link": "",
+        "button_text": "View all articles"
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "title": "Du har tidigare tittat på"
+      }
+    },
+    "collection-banner": {
+      "type": "collection-banner",
+      "settings": {}
+    }
+  },
+  "order": [
+    "collection-banner",
+    "main",
+    "9dbd859f-3c93-4d99-abc1-4952db62993f",
+    "ed7d7535-8a81-404b-b2cf-8828313b7710",
+    "recently-viewed-products"
+  ]
+}

@@ -1,0 +1,224 @@
+{%- comment -%}
+  Car Divider Section (Glowid)
+  - Bil/ikon kör över sidan
+  - Stöd för loop / scroll once
+  - Riktning vänster→höger eller höger→vänster
+  - Justerbar bakgrund (färg eller bild)
+{%- endcomment -%}
+
+{%- assign _id = section.id -%}
+
+<div class="car-divider car-divider--{{ _id }}">
+  <div class="car-divider__track">
+    {%- if section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 1400 }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        alt="{{ section.settings.alt_text | escape }}"
+        class="car-divider__car"
+        loading="lazy"
+        decoding="async"
+      >
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ _id }} .car-divider__track{
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.track_height }}px;
+    overflow: hidden;
+    background: {{ section.settings.bg_color }};
+    {%- if section.settings.bg_image != blank -%}
+      background-image: url({{ section.settings.bg_image | image_url: width: 2000 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- endif -%}
+  }
+  @media (max-width: 749px){
+    #shopify-section-{{ _id }} .car-divider__track{
+      height: {{ section.settings.track_height_mobile }}px;
+    }
+  }
+
+  #shopify-section-{{ _id }} .car-divider__car{
+    position: absolute;
+    bottom: 0;
+    width: {{ section.settings.car_width }}px;
+    max-width: 70vw;
+    will-change: transform;
+    {%- if section.settings.direction == 'rtl' -%}
+      right: -{{ section.settings.start_offset }}px;
+      transform: scaleX({{ section.settings.flip_for_rtl | default: true | json }});
+    {%- else -%}
+      left: -{{ section.settings.start_offset }}px;
+    {%- endif -%}
+  }
+
+  @keyframes drive-left-{{ _id }}{
+    from{ right: -{{ section.settings.start_offset }}px; }
+    to  { right: 100vw; }
+  }
+  @keyframes drive-right-{{ _id }}{
+    from{ left: -{{ section.settings.start_offset }}px; }
+    to  { left: 100vw; }
+  }
+
+  #shopify-section-{{ _id }} .car-divider__car.run{
+    animation-duration: {{ section.settings.speed_seconds }}s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    {%- if section.settings.direction == 'rtl' -%}
+      animation-name: drive-left-{{ _id }};
+    {%- else -%}
+      animation-name: drive-right-{{ _id }};
+    {%- endif -%}
+    {%- if section.settings.play_mode == 'loop' -%}
+      animation-iteration-count: infinite;
+    {%- else -%}
+      animation-iteration-count: 1;
+    {%- endif -%}
+  }
+</style>
+
+<script>
+  (function(){
+    var root = document.getElementById('shopify-section-{{ _id }}');
+    var car  = root && root.querySelector('.car-divider__car');
+    if(!car) return;
+
+    var playMode = {{ section.settings.play_mode | json }};
+
+    function start(){
+      car.classList.add('run');
+    }
+
+    if (playMode === 'loop'){
+      start();
+    } else {
+      var track = root.querySelector('.car-divider__track');
+      if(!('IntersectionObserver' in window) || !track){
+        start();
+        return;
+      }
+      var once = false;
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(!once && e.isIntersecting){
+            once = true;
+            start();
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.15 });
+      io.observe(track);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Car Divider",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bil/ikon (PNG/SVG med transparent bakgrund)"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Alt-text (tillgänglighet)",
+      "default": "Glowid delivery truck"
+    },
+    {
+      "type": "select",
+      "id": "play_mode",
+      "label": "Spelsätt",
+      "options": [
+        { "value": "loop", "label": "Loop – kör hela tiden" },
+        { "value": "scroll_once", "label": "Scroll – kör en gång när sektionen syns" }
+      ],
+      "default": "loop"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Riktning",
+      "options": [
+        { "value": "ltr", "label": "Vänster → Höger" },
+        { "value": "rtl", "label": "Höger → Vänster" }
+      ],
+      "default": "rtl"
+    },
+    {
+      "type": "checkbox",
+      "id": "flip_for_rtl",
+      "label": "Spegla bilden automatiskt när riktning är Höger → Vänster",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed_seconds",
+      "label": "Hastighet (sekunder per körning)",
+      "min": 3,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "car_width",
+      "label": "Bilens bredd (px, desktop)",
+      "min": 80,
+      "max": 420,
+      "step": 10,
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "track_height",
+      "label": "Sektionens höjd (px, desktop)",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "track_height_mobile",
+      "label": "Sektionens höjd (px, mobil)",
+      "min": 60,
+      "max": 240,
+      "step": 10,
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "start_offset",
+      "label": "Start utanför kant (px)",
+      "min": 80,
+      "max": 400,
+      "step": 10,
+      "default": 250
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Bakgrundsfärg (fallback)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Bakgrundsbild (valfritt)"
+    }
+  ],
+  "presets": [
+    { "name": "Car Divider" }
+  ]
+}
+{% endschema %}

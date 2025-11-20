@@ -1,0 +1,132 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection-banner": {
+      "type": "collection-banner",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "image_size": "auto",
+        "allow_transparent_header": true,
+        "reveal": true,
+        "enable_parallax": true,
+        "show_image": true,
+        "show_collection_title": true,
+        "show_collection_description": true,
+        "show_breadcrumb": true,
+        "content_width": "xs",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "slideshow_eQmn3W": {
+      "type": "slideshow",
+      "blocks": {
+        "image_wkyDFf": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/20220825_glowID_Hyal_Reyouth_Dr.Ceuracle_2789_web_header_1500x800px_kopia_6e04c89f-7791-45ed-bf0a-7209e55d9ed8.jpg",
+            "mobile_image": "shopify://shop_images/20220825_glowID_Hyal_Reyouth_Dr.Ceuracle_2789_web_1080x1350px.jpg",
+            "subheading": "",
+            "title": "NYHETER",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(54, 54, 54, 0.2) 0%, rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_wkyDFf"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "auto",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "custom_html_UUznDz": {
+      "type": "custom-html",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "title": "Låt oss presentera våra senaste shelfie favourites!",
+        "html": "<div class=\"vidjet-carousel-wrapper carousel-inline\" style=\"max-height: 445px; margin: 0 16px; height: 100vw; position: relative; overflow: hidden;\"> <iframe class=\"vidjet-embed-iframe\" data-vidjet-campaign-id=\"68bbd787-1e88-4cef-b07c-a9ab6cb22f28\" src=\"https://player.vidjet.io/d42a8491-96fd-4f2c-9eb9-d62a7fa88547/68bbd787-1e88-4cef-b07c-a9ab6cb22f28\" style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\" allow=\"clipboard-read; clipboard-write; fullscreen\" frameborder=\"0\"> </iframe> </div>"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "",
+        "hide_product_information": false,
+        "products_per_page": 48,
+        "products_per_row_mobile": "2",
+        "products_size_desktop": "medium",
+        "show_grid_mode_selector": true,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "filter_layout": "sidebar",
+        "quick_links_menu": "",
+        "show_sort_by": true,
+        "show_filters": true,
+        "show_results_count": true,
+        "show_filter_group_name": false,
+        "show_filter_values_count": true,
+        "open_filters_by_default": false
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "separate_section_with_border": true,
+        "color_scheme": "",
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_count": 9,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Du har tidigare tittat på",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "collection-banner",
+    "slideshow_eQmn3W",
+    "custom_html_UUznDz",
+    "main",
+    "recently-viewed-products"
+  ]
+}

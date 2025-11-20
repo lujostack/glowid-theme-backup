@@ -1,0 +1,143 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor_t6FpTd": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title_NjeQHL": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h3"
+          }
+        },
+        "44412923-40be-4027-ab3b-6c41fc2fee13": {
+          "type": "shopify://apps/growave-loyalty-wishlist/blocks/block.product.reviewAvgProfile/b3d2efbe-110a-4e27-84a8-1f2ed63996a4",
+          "settings": {
+            "custom_css": ""
+          }
+        },
+        "price_GPyigq": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_price_in_button": false,
+            "show_payment_button": false,
+            "show_gift_card_recipient": true,
+            "atc_button_background": "#f3afc9",
+            "atc_button_text_color": "#363636",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
+        },
+        "074e552c-d42d-4f78-a189-e4fd21bf70dd": {
+          "type": "shopify://apps/growave-loyalty-wishlist/blocks/block.product.faveButton/b3d2efbe-110a-4e27-84a8-1f2ed63996a4",
+          "settings": {
+            "option_button_class": "",
+            "custom_css": "",
+            "shadow_root_options": "null"
+          }
+        },
+        "tabs_JHNK9r": {
+          "type": "tabs",
+          "settings": {
+            "show_below_gallery": true
+          }
+        },
+        "share_buttons": {
+          "type": "share_buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "vendor_t6FpTd",
+        "title_NjeQHL",
+        "44412923-40be-4027-ab3b-6c41fc2fee13",
+        "price_GPyigq",
+        "quantity_selector",
+        "buy_buttons",
+        "074e552c-d42d-4f78-a189-e4fd21bf70dd",
+        "tabs_JHNK9r",
+        "share_buttons"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "container_size": "lg",
+        "product_info_size": 35,
+        "show_sticky_add_to_cart": true,
+        "center_basic_info": false,
+        "desktop_media_layout": "grid",
+        "desktop_media_grid_gap": 30,
+        "mobile_controls": "dots",
+        "enable_media_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3
+      }
+    },
+    "1641894165c3dcdbf0": {
+      "type": "apps",
+      "blocks": {
+        "f5dd454f-2bf5-4568-b7e2-bf1de7030fe9": {
+          "type": "shopify://apps/growave-loyalty-wishlist/blocks/block.product.reviewWidget/b3d2efbe-110a-4e27-84a8-1f2ed63996a4",
+          "settings": {
+            "min_images_for_slider_visibility": 6,
+            "reviews_per_page": 5,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "f5dd454f-2bf5-4568-b7e2-bf1de7030fe9"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "separate_section_with_border": true,
+        "color_scheme": "",
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_count": 9,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Du har tidigare tittat på",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1641894165c3dcdbf0",
+    "recently-viewed-products"
+  ]
+}

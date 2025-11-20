@@ -1,0 +1,326 @@
+{%- liquid
+  assign has_content = false
+  if section.settings.use_product_description and product.description != blank
+    assign has_content = true
+  elsif section.blocks.size > 0
+    assign has_content = true
+  endif
+-%}
+
+{%- if has_content -%}
+  {%- assign color_scheme_hash = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background | md5 -%}
+
+  <div class="section-spacing color-scheme color-scheme--{{ section.settings.color_scheme.id }} color-scheme--bg-{{ color_scheme_hash }} {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+    <div class="container {% if section.settings.text_alignment == 'center' %}container--xl{% endif %}">
+      <div class="section-stack">
+        {%- render 'section-header', subheading: section.settings.subheading, heading: section.settings.title, content: section.settings.content, text_alignment: section.settings.text_alignment -%}
+
+        {%- if section.settings.use_product_description and product.description != blank -%}
+          {%- comment -%} EMERGENCY MODE: Parse product description by H5 headings {%- endcomment -%}
+          {%- liquid
+            assign description_sections = product.description | split: '<h5'
+            assign tab_sections = ''
+            assign tab_titles = ''
+            
+            for section in description_sections
+              if forloop.first
+                continue
+              endif
+              
+              assign section_with_h5 = '<h5' | append: section
+              assign title_end = section_with_h5 | split: '</h5>' | first
+              assign title_start = title_end | split: '>' | last
+              assign content_start = section_with_h5 | split: '</h5>' 
+              assign content = content_start[1]
+              
+              if title_start != blank and content != blank
+                if tab_titles != blank
+                  assign tab_titles = tab_titles | append: '|||'
+                endif
+                assign tab_titles = tab_titles | append: title_start
+                
+                if tab_sections != blank
+                  assign tab_sections = tab_sections | append: '|||'
+                endif
+                assign tab_sections = tab_sections | append: content
+              endif
+            endfor
+            
+            assign titles_array = tab_titles | split: '|||'
+            assign sections_array = tab_sections | split: '|||'
+          -%}
+
+          {%- if titles_array.size > 0 -%}
+            <!-- DESKTOP LAYOUT -->
+            <x-tabs class="content-tabs {% if section.settings.text_alignment == 'center' %}content-tabs--center{% endif %} hidden sm:block">
+              <template shadowrootmode="open">
+                <slot role="tablist" part="tab-list" name="title"></slot>
+                <slot part="tab-panel-list" name="content"></slot>
+              </template>
+
+              {%- for title in titles_array -%}
+                {%- liquid
+                  assign clean_title = title | strip
+                  assign section_content = sections_array[forloop.index0] | strip
+                  
+                  # Try to translate common tab titles
+                  assign title_key = clean_title | handleize | replace: '-', '_'
+                  assign translation_key = 'product.tabs.' | append: title_key
+                  assign translated_title = translation_key | t
+                  if translated_title != translation_key
+                    assign clean_title = translated_title
+                  endif
+                -%}
+
+                {%- if clean_title != blank and section_content != blank -%}
+                  <button class="h6" type="button" role="tab" slot="title">{{ clean_title }}</button>
+
+                  <div role="tabpanel" slot="content" {% cycle '', 'hidden', 'hidden', 'hidden', 'hidden' %}>
+                    <div class="prose">
+                      {{- section_content -}}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </x-tabs>
+
+            <!-- MOBILE LAYOUT -->
+            <div class="accordion-group sm:hidden">
+              {%- for title in titles_array -%}
+                {%- liquid
+                  assign clean_title = title | strip
+                  assign section_content = sections_array[forloop.index0] | strip
+                  
+                  # Try to translate common tab titles
+                  assign title_key = clean_title | handleize | replace: '-', '_'
+                  assign translation_key = 'product.tabs.' | append: title_key
+                  assign translated_title = translation_key | t
+                  if translated_title != translation_key
+                    assign clean_title = translated_title
+                  endif
+                -%}
+
+                {%- if clean_title != blank and section_content != blank -%}
+                  {%- render 'accordion', title: clean_title, content: section_content, prose_content: true -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+        {%- else -%}
+          {%- comment -%} NORMAL MODE: Use blocks {%- endcomment -%}
+          <!-- DESKTOP LAYOUT -->
+          <x-tabs class="content-tabs {% if section.settings.text_alignment == 'center' %}content-tabs--center{% endif %} hidden sm:block">
+            <template shadowrootmode="open">
+              <slot role="tablist" part="tab-list" name="title"></slot>
+              <slot part="tab-panel-list" name="content"></slot>
+            </template>
+
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign title = block.settings.page.title | default: block.settings.title
+                
+                # Try to translate common tab titles
+                assign title_key = title | handleize | replace: '-', '_'
+                assign translation_key = 'product.tabs.' | append: title_key
+                assign translated_title = translation_key | t
+                if translated_title != translation_key
+                  assign title = translated_title
+                endif
+
+                if block.type == 'tab'
+                  assign content = block.settings.page.content | default: block.settings.content
+                elsif block.type == 'liquid'
+                  assign content = block.settings.liquid
+                endif
+              -%}
+
+              {%- if title != blank and content != blank -%}
+                <button class="h6" type="button" role="tab" slot="title" {{ block.shopify_attributes }}>{{ title }}</button>
+
+                <div role="tabpanel" slot="content" {% cycle '', 'hidden', 'hidden', 'hidden', 'hidden' %}>
+                  <div class="prose">
+                    {{- content -}}
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </x-tabs>
+
+          <!-- MOBILE LAYOUT -->
+          <div class="accordion-group sm:hidden">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign title = block.settings.page.title | default: block.settings.title
+                
+                # Try to translate common tab titles
+                assign title_key = title | handleize | replace: '-', '_'
+                assign translation_key = 'product.tabs.' | append: title_key
+                assign translated_title = translation_key | t
+                if translated_title != translation_key
+                  assign title = translated_title
+                endif
+
+                if block.type == 'tab'
+                  assign content = block.settings.page.content | default: block.settings.content
+                elsif block.type == 'liquid'
+                  assign content = block.settings.liquid
+                endif
+              -%}
+
+              {%- if title != blank and content != blank -%}
+                {%- render 'accordion', title: title, content: content, open: block.settings.open_on_mobile, prose_content: true -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.tabs.name",
+  "class": "shopify-section--tabs",
+  "max_blocks": 5,
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_product_description",
+      "label": "Use product description",
+      "info": "Split product description by H5 headings instead of metafields.",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:global.colors.scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "separate_section_with_border",
+      "label": "t:global.section.separate_section_with_border",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "t:global.text.subheading",
+      "default": "Subheading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "t:global.text.heading",
+      "default": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:global.text.alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:global.position.left"
+        },
+        {
+          "value": "center",
+          "label": "t:global.position.center"
+        }
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "t:sections.tabs.blocks.tab.name",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:global.text.title",
+          "default": "Tab"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:global.text.content",
+          "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "t:sections.tabs.blocks.tab.page",
+          "info": "t:sections.tabs.blocks.tab.page_info"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_on_mobile",
+          "label": "t:sections.tabs.blocks.tab.open_on_mobile",
+          "info": "t:sections.tabs.blocks.tab.open_on_mobile_info",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "liquid",
+      "name": "t:sections.tabs.blocks.liquid.name",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:global.text.title",
+          "default": "Tab"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid",
+          "label": "t:global.code.liquid",
+          "default": "<p>Use Liquid code to create advanced customization.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_on_mobile",
+          "label": "t:sections.tabs.blocks.tab.open_on_mobile",
+          "info": "t:sections.tabs.blocks.tab.open_on_mobile_info",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.tabs.presets.tab.name",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 1",
+            "content": "<p>Use this text to share information about your brand with your customers.</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 2",
+            "content": "<p>Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 3",
+            "content": "<p>Share information about your shipping rates, return policy or contact information.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,226 @@
+{% assign product_blocked = false %}
+{% assign product_blocked_price = 0 %}
+{% assign freegift = false %}
+
+{%- for line_item in cart.items -%}
+  {% comment %} Check if any of the free gift products are already in the cart {% endcomment %}
+  {% if line_item.product.handle == settings.free-gift-product1 or line_item.product.handle == settings.free-gift-product2 or line_item.product.handle == settings.free-gift-product3 %}
+    {% assign freegift = true %}
+  {% endif %}
+
+  {% if forloop.length == 1 and settings.product_blocked.id == line_item.product_id %}
+    {% assign product_blocked = true %} {% comment %} if cart only have one item and the item is product blocked {% endcomment %}
+  {% endif %}
+  {% if settings.product_blocked.id == line_item.product_id %}
+    {% assign product_blocked_price = line_item.price | times: line_item.quantity %}
+  {% endif %}
+{%- endfor -%}
+
+{% comment %} Use metafield system for currency-specific thresholds (like old theme) {% endcomment %}
+{% assign productGift = all_products[settings.limit-gift-product] %}
+{% assign limit = 49900 %} {% comment %} Default minimum value if not configured (499 * 100) {% endcomment %}
+
+{% comment %} Primary method: Use metafield for currency-specific limits (preferred) {% endcomment %}
+{% if productGift and productGift.metafields.custom.limit_gift.value != blank %}
+  {% assign limit = productGift.metafields.custom.limit_gift.value %}
+{% comment %} Fallback method: Use theme setting cart-break {% endcomment %}
+{% elsif settings.cart-break != blank %}
+  {% assign limit_in_currency = settings.cart-break | plus: 0 %} {% comment %} Convert string to number {% endcomment %}
+  {% assign limit = limit_in_currency | times: 100 %} {% comment %} Convert to cents for comparison {% endcomment %}
+{% endif %}
+
+{% assign cart_total = cart.total_price %}
+{% if product_blocked == false %}
+  {% assign cart_total = cart.total_price | minus: product_blocked_price %}
+{% endif %}
+
+{% comment %} Check if there's at least one free gift product configured and available {% endcomment %}
+{% assign has_gift_product = false %}
+{% if settings.free-gift-product1 != blank and all_products[settings.free-gift-product1] != blank %}
+  {% assign has_gift_product = true %}
+{% elsif settings.free-gift-product2 != blank and all_products[settings.free-gift-product2] != blank %}
+  {% assign has_gift_product = true %}
+{% elsif settings.free-gift-product3 != blank and all_products[settings.free-gift-product3] != blank %}
+  {% assign has_gift_product = true %}
+{% endif %}
+
+{% comment %} Show gift selection UI if cart qualifies - simplified like original theme {% endcomment %}
+{% assign show_gift_ui = false %}
+{% if cart_total >= limit and freegift == false and product_blocked == false and has_gift_product %}
+  {% if settings.free-gift-enable %}
+    {% assign show_gift_ui = true %}
+  {% endif %}
+{% endif %}
+{% assign count_gift = 0 %}
+{% assign count_whislist = 0 %}
+{% assign is_free_product = false %}
+{% assign check_free_product = false %}
+{% assign limit_in_currency = settings.cart-break | plus: 0 | times: 100  %}
+{%- for line_item in cart.items -%}
+  {% if line_item.product.tags contains "no_wishlist" %}
+    {% assign count_whislist = count_whislist | plus: 1 %}
+  {% endif %}
+{%- endfor -%}
+
+{% if count_whislist > 1 %}
+  {% assign check_free_product = true %}
+{% endif %}
+{% if cart.item_count == 1 and count_whislist >= 1 %}
+  {% assign check_free_product = true %}
+{% endif %}
+
+{% if cart.total_price < limit_in_currency and count_whislist >= 1 %}
+  {% assign check_free_product = true %}
+{% endif %}
+
+{% if cart.total_price >= limit_in_currency and count_whislist < 1 %}
+  {% assign is_free_product = true %}
+{% endif %}
+
+{% if show_gift_ui %}
+  {%- assign product1 = all_products[settings.free-gift-product1] -%}
+  {%- assign product2 = all_products[settings.free-gift-product2] -%}
+  {%- assign product3 = all_products[settings.free-gift-product3] -%}
+
+  <style>
+    .cart-drawer__free-gift {
+      margin: 1.5rem 0;
+      padding: 1.5rem 0;
+      border-top: 2px solid {{ section.settings.gift_section_border | default: 'rgb(var(--primary-button-background))' }};
+      border-bottom: 2px solid {{ section.settings.gift_section_border | default: 'rgb(var(--primary-button-background))' }};
+    }
+
+    .cart-drawer__free-gift h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  </style>
+
+  <div class="cart-drawer__free-gift" id="gift-ui-container">
+    <h2 class="h4">{{ settings.free-gift-title | default: "Free Gift - Your cart qualifies for a free gift!" }}</h2>
+    <div class="v-stack gap-1.5">
+      {% if template == 'cart' %}
+        {% if settings.free-gift-product1 != blank and product1 != blank %}
+        {% assign count_gift = count_gift | plus: 1 %}
+        <div class="line-item hidden">
+          {{- product1.featured_image | image_url: width: product1.featured_image.width | image_tag: loading: 'lazy', sizes: '(max-width: 699px) 70px, 120px', widths: '70,120,140,210,240,360', class: 'line-item__media' -}}
+          <div class="line-item-info line-item-info-free-1">
+            <div class="v-stack justify-items-start gap-2">
+              <div class="v-stack justify-items-start gap-1">
+                <p class="h6">{{ product1.title }}</p>
+              </div>
+              <button type="button" onclick="addGiftProduct(1)" class="button button--secondary button--sm hidden">{{ section.settings.gift_accept_text | default: "VÄLJ" }}</button>
+              {%- capture product_form_id -%}product-form-featured-product-{{ settings.free-gift-product1.id }}{%- endcapture -%}
+              {%- render 'buy-buttons-gift',
+                  section: section,
+                  product: settings.free-gift-product1,
+                  form_id: product_form_id
+              -%}            
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endif %}
+      {% if settings.free-gift-product1 != blank and product1 != blank %}
+      {% assign count_gift = count_gift | plus: 1 %}
+      <div class="line-item">
+        {{- product1.featured_image | image_url: width: product1.featured_image.width | image_tag: loading: 'lazy', sizes: '(max-width: 699px) 70px, 120px', widths: '70,120,140,210,240,360', class: 'line-item__media' -}}
+        <div class="line-item-info line-item-info-free-1">
+          <div class="v-stack justify-items-start gap-2">
+            <div class="v-stack justify-items-start gap-1">
+              <p class="h6">{{ product1.title }}</p>
+            </div>
+            <button type="button" onclick="addGiftProduct(1)" class="button button--secondary button--sm hidden">{{ section.settings.gift_accept_text | default: "VÄLJ" }}</button>
+            {%- capture product_form_id -%}product-form-featured-product-{{ settings.free-gift-product1.id }}{%- endcapture -%}
+            {%- render 'buy-buttons-gift',
+                section: section,
+                product: settings.free-gift-product1,
+                form_id: product_form_id
+            -%}            
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if settings.free-gift-product2 != blank and product2 != blank %}
+      {% assign count_gift = count_gift | plus: 1 %}
+      <div class="line-item">
+        {{- product2.featured_image | image_url: width: product2.featured_image.width | image_tag: loading: 'lazy', sizes: '(max-width: 699px) 70px, 120px', widths: '70,120,140,210,240,360', class: 'line-item__media' -}}
+        <div class="line-item-info line-item-info-free-2">
+          <div class="v-stack justify-items-start gap-2">
+            <div class="v-stack justify-items-start gap-1">
+              <p class="h6">{{ product2.title }}</p>
+            </div>
+            <button type="button" onclick="addGiftProduct(2)" class="button button--secondary button--sm hidden">{{ section.settings.gift_accept_text | default: "VÄLJ" }}</button>
+            {%- capture product_form_id -%}product-form-featured-product-{{ settings.free-gift-product2.id }}{%- endcapture -%}
+            {%- render 'buy-buttons-gift',
+                section: section,
+                product: settings.free-gift-product2,
+                form_id: product_form_id
+            -%} 
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if settings.free-gift-product3 != blank and product3 != blank %}
+      {% assign count_gift = count_gift | plus: 1 %}
+      <div class="line-item">
+        {{- product3.featured_image | image_url: width: product3.featured_image.width | image_tag: loading: 'lazy', sizes: '(max-width: 699px) 70px, 120px', widths: '70,120,140,210,240,360', class: 'line-item__media' -}}
+        <div class="line-item-info line-item-info-free-3">
+          <div class="v-stack justify-items-start gap-2">
+            <div class="v-stack justify-items-start gap-1">
+              <p class="h6">{{ product3.title }}</p>
+            </div>
+            <button type="button" onclick="addGiftProduct(3)" class="button button--secondary button--sm hidden">{{ section.settings.gift_accept_text | default: "VÄLJ" }}</button>
+            {%- capture product_form_id -%}product-form-featured-product-{{ settings.free-gift-product3.id }}{%- endcapture -%}
+            {%- render 'buy-buttons-gift',
+                section: section,
+                product: settings.free-gift-product3,
+                form_id: product_form_id
+            -%} 
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% comment %} END cart-drawer__free-gift {% endcomment %}
+{% endif %}
+
+<script>
+  if (localStorage.getItem('isAutomatic') === null) {
+    localStorage.setItem('isAutomatic', 'true');
+  }
+
+  window.isAutomatic = localStorage.getItem('isAutomatic') === 'true';
+
+  function checkGiftEligibilityAndRemove() {
+    setTimeout(function() {
+      let check_free_product = {{ check_free_product }};
+      let is_free_product = {{ is_free_product }};
+
+      if (check_free_product) {
+        $(".line-item_free_gift").hide();
+        const removeBtn = document.querySelector(".line-item_free_gift [data-action='remove-item']");
+        if (removeBtn) removeBtn.click();
+      }
+
+      {% if count_gift == 1 and template != 'cart' %}
+        if (is_free_product && window.isAutomatic) {
+          window.isAutomatic = false;
+          localStorage.setItem('isAutomatic', 'false');
+          const addBtn = document.querySelector(".line-item-info-free-1 .btn-git-cart");
+          if (addBtn) addBtn.click();
+        }
+      {% endif %}
+    }, 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    checkGiftEligibilityAndRemove();
+  });
+
+  document.addEventListener('cart-drawer:refreshed', function() {
+    checkGiftEligibilityAndRemove();
+  });
+</script>
+

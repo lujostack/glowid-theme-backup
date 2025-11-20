@@ -1,0 +1,32 @@
+{% comment %}
+  Event Data Snippet for GLOWiD
+{% endcomment %}
+
+<script type="text/javascript" id="datalayer-script">
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Define market data for all pages
+      const marketData = {
+        market: {{ localization.market.metafields.custom.gtm_iso  | json }} || 'unknown',
+        currency: {{ cart.currency.iso_code | json }} || 'unknown',
+        locale: {{ request.locale.iso_code | json }} || 'unknown'
+      };
+
+      const hasShopifyAnalytics = typeof window.Shopify.analytics !== 'undefined';
+
+      if (hasShopifyAnalytics) {
+        // Structure with customData.page_info path
+        const marketEvent = {
+          customData: {
+            page_info: {
+              market: marketData.market,
+              locale: marketData.locale,
+              currency: marketData.currency
+            }
+          }
+        };
+
+        Shopify.analytics.publish('market_event', marketEvent);
+      }
+    });
+</script>

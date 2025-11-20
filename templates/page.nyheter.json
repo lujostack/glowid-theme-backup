@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "91043cf2-4396-4e8d-afd2-cc06fb083ee4": {
+      "type": "slideshow",
+      "blocks": {
+        "template--15646920868026__91043cf2-4396-4e8d-afd2-cc06fb083ee4-image-2": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "subheading": "Slide title",
+            "title": "",
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_2_text": "",
+            "button_2_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15646920868026__91043cf2-4396-4e8d-afd2-cc06fb083ee4-image-2"
+      ],
+      "settings": {
+        "autoplay": true,
+        "cycle_speed": 5
+      }
+    },
+    "ce7d3ba6-c4b1-47ef-b936-65953f85d268": {
+      "type": "slideshow",
+      "blocks": {
+        "template--15646920868026__ce7d3ba6-c4b1-47ef-b936-65953f85d268-image-1": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/2_6cd71394-058c-4c53-a393-8b1d0cf8f410.png",
+            "subheading": "",
+            "title": "",
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_2_text": "",
+            "button_2_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15646920868026__ce7d3ba6-c4b1-47ef-b936-65953f85d268-image-1"
+      ],
+      "settings": {
+        "autoplay": false,
+        "cycle_speed": 5
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "custom_css": [],
+      "settings": {}
+    }
+  },
+  "order": [
+    "91043cf2-4396-4e8d-afd2-cc06fb083ee4",
+    "ce7d3ba6-c4b1-47ef-b936-65953f85d268",
+    "main"
+  ]
+}

@@ -1,0 +1,415 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+PRODUCT INFO TABS COMPONENT
+----------------------------------------------------------------------------------------------------------------------
+
+This component renders product information tabs using metafields from the 'tabs' namespace.
+Only tabs with content will be displayed.
+
+********************************************
+Supported parameters
+********************************************
+
+* block: block object for theme editor attributes
+* product: product object to pull metafields from
+
+{%- endcomment -%}
+
+{%- liquid
+  # Generate unique component ID
+  assign unique_id = block.id | replace: '_', '' | downcase
+  
+  assign valid_tabs = ''
+  assign tabs_count = 0
+  assign valid_tabs_array = ''
+  assign tab_contents_array = ''
+  
+  if block.settings.use_product_description and product.description != blank
+    # Parse product description by H5 headings
+    assign description_sections = product.description | split: '<h5'
+    assign tab_sections = ''
+    assign tab_titles = ''
+    
+    for section in description_sections
+      if forloop.first
+        continue
+      endif
+      
+      # Reconstruct the h5 section
+      assign section_with_h5 = '<h5' | append: section
+      
+      # Find the end of the h5 tag to extract the title
+      assign h5_close_split = section_with_h5 | split: '</h5>'
+      if h5_close_split.size < 2
+        continue
+      endif
+      
+      # Extract title from inside h5 tags
+      assign h5_opening = h5_close_split[0]
+      assign title_start = h5_opening | split: '>' | last | strip
+      
+      # Extract content after h5 tag - preserve all formatting including line breaks
+      assign content = h5_close_split[1]
+      
+      # Only strip excessive leading/trailing whitespace but preserve internal formatting
+      if content != blank
+        assign content = content | strip
+      endif
+      
+      if title_start != blank and content != blank
+        assign tabs_count = tabs_count | plus: 1
+        if tab_titles != blank
+          assign tab_titles = tab_titles | append: '|||'
+          assign tab_sections = tab_sections | append: '|||'
+        endif
+        assign tab_titles = tab_titles | append: title_start
+        assign tab_sections = tab_sections | append: content
+      endif
+    endfor
+    
+    assign valid_tabs_array = tab_titles | split: '|||'
+    assign tab_contents_array = tab_sections | split: '|||'
+  else
+    # NORMAL MODE: Use metafields
+    assign tab_keys = 'description,usage,ingredients,precautions,product_information,q_and_a,material,spoiler_content' | split: ','
+    
+    for tab_key in tab_keys
+      assign tab_content = product.metafields.tabs[tab_key]
+      if tab_content != blank and tab_content != empty
+        assign tabs_count = tabs_count | plus: 1
+        if valid_tabs == ''
+          assign valid_tabs = tab_key
+        else
+          assign valid_tabs = valid_tabs | append: ',' | append: tab_key
+        endif
+      endif
+    endfor
+    
+    assign valid_tabs_array = valid_tabs | split: ','
+  endif
+-%}
+
+{%- if tabs_count > 0 -%}
+  {%- # CSS Variables and Styles -%}
+  {% style %}
+    :root {
+      --product-tabs-bg-default: #f3afc9;
+      --product-tabs-bg-active: #ffffff;
+      --product-tabs-bg-hover: #f1a5c4;
+      --product-tabs-text-color: #575757;
+      --product-tabs-border-color: #e5e5e5;
+      --product-tabs-border-active: #f3afc9;
+    }
+
+    /* ==========================================================================
+       Product Tabs Container
+       ========================================================================== */
+    .product-tabs-{{ unique_id }} {
+      width: 100%;
+      margin: 2rem 0;
+    }
+
+    /* ==========================================================================
+       Tab Navigation
+       ========================================================================== */
+    .product-tabs-nav-{{ unique_id }} {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--product-tabs-border-color);
+      background: transparent;
+      overflow: visible;
+    }
+
+    /* ==========================================================================
+       Tab Buttons
+       ========================================================================== */
+    .product-tab-button-{{ unique_id }} {
+      /* Layout */
+      flex: 0 0 auto;
+      min-width: max-content;
+      padding: 10px 12px;
+      
+      /* Appearance */
+      background: var(--product-tabs-bg-default);
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      
+      /* Typography */
+      font-size: 13px;
+      font-weight: normal;
+      color: var(--product-tabs-text-color);
+      text-transform: uppercase;
+      line-height: 1.1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      
+      /* Effects */
+      transition: all 0.3s ease;
+    }
+
+    .product-tab-button-{{ unique_id }}:hover {
+      color: var(--product-tabs-text-color);
+      background: var(--product-tabs-bg-hover);
+    }
+
+    .product-tab-button-{{ unique_id }}.active {
+      color: var(--product-tabs-text-color);
+      border-bottom-color: var(--product-tabs-border-active);
+      background: var(--product-tabs-bg-active);
+    }
+
+    /* ==========================================================================
+       Tab Content
+       ========================================================================== */
+    .product-tab-content-{{ unique_id }} {
+      display: none;
+      padding: 12px 0;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .product-tab-content-{{ unique_id }}.active {
+      display: block;
+    }
+
+    .product-tab-prose-{{ unique_id }} {
+      line-height: 1.6;
+      color: var(--product-tabs-text-color);
+    }
+
+    /* Content Typography */
+    .product-tab-prose-{{ unique_id }} p {
+      margin: 0 0 1rem 0;
+    }
+
+    .product-tab-prose-{{ unique_id }} h1,
+    .product-tab-prose-{{ unique_id }} h2,
+    .product-tab-prose-{{ unique_id }} h3,
+    .product-tab-prose-{{ unique_id }} h4,
+    .product-tab-prose-{{ unique_id }} h5,
+    .product-tab-prose-{{ unique_id }} h6 {
+      margin: 1.5rem 0 0.75rem 0;
+      font-weight: 600;
+    }
+
+    .product-tab-prose-{{ unique_id }} ul,
+    .product-tab-prose-{{ unique_id }} ol {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .product-tab-prose-{{ unique_id }} li {
+      margin: 0.25rem 0;
+    }
+
+
+
+    /* ==========================================================================
+       Animations
+       ========================================================================== */
+    @keyframes fadeIn {
+      from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    /* ==========================================================================
+       Responsive Design
+       ========================================================================== */
+    @media screen and (max-width: 749px) {
+      .product-tab-button-{{ unique_id }} {
+        padding: 8px 10px;
+        font-size: 12px;
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .product-tab-content-{{ unique_id }} {
+        padding: 12px 0;
+      }
+
+      /* Allow tabs to wrap to multiple rows on small screens */
+      .product-tabs-nav-{{ unique_id }} {
+        gap: 1px;
+      }
+    }
+  {% endstyle %}
+
+  {%- # Component Markup -%}
+  <product-tabs-{{ unique_id }} class="product-tabs-{{ unique_id }}" {{ block.shopify_attributes }}>
+    {%- # Tab Navigation -%}
+    <div class="product-tabs-nav-{{ unique_id }}" role="tablist">
+      {%- if block.settings.use_product_description -%}
+        {%- for tab_title in valid_tabs_array -%}
+          {%- liquid
+            assign clean_title = tab_title | strip
+            assign tab_key = clean_title | handleize
+          -%}
+          
+          <button
+            class="product-tab-button-{{ unique_id }}{% if forloop.first %} active{% endif %}"
+            data-tab="{{ tab_key }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            role="tab"
+            aria-controls="tab-content-{{ unique_id }}-{{ tab_key }}"
+            id="tab-{{ unique_id }}-{{ tab_key }}"
+          >
+            {{ clean_title }}
+          </button>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for tab_key in valid_tabs_array -%}
+          {%- assign translation_key = 'product.tabs.' | append: tab_key -%}
+          {%- assign tab_title = translation_key | t -%}
+          
+          <button
+            class="product-tab-button-{{ unique_id }}{% if forloop.first %} active{% endif %}"
+            data-tab="{{ tab_key }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            role="tab"
+            aria-controls="tab-content-{{ unique_id }}-{{ tab_key }}"
+            id="tab-{{ unique_id }}-{{ tab_key }}"
+          >
+            {{ tab_title }}
+          </button>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- # Tab Content Panels -%}
+    <div class="product-tabs-content-{{ unique_id }}">
+      {%- if block.settings.use_product_description -%}
+        {%- for tab_title in valid_tabs_array -%}
+          {%- liquid
+            assign clean_title = tab_title | strip
+            assign tab_key = clean_title | handleize
+            assign section_content = tab_contents_array[forloop.index0] | strip
+          -%}
+          
+          <div
+            class="product-tab-content-{{ unique_id }}{% if forloop.first %} active{% endif %}"
+            data-tab-content="{{ tab_key }}"
+            role="tabpanel"
+            aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+            aria-labelledby="tab-{{ unique_id }}-{{ tab_key }}"
+            id="tab-content-{{ unique_id }}-{{ tab_key }}"
+          >
+            <div class="prose">
+              {{- section_content -}}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for tab_key in valid_tabs_array -%}
+          {%- assign tab_content = product.metafields.tabs[tab_key] -%}
+          
+          <div
+            class="product-tab-content-{{ unique_id }}{% if forloop.first %} active{% endif %}"
+            data-tab-content="{{ tab_key }}"
+            role="tabpanel"
+            aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+            aria-labelledby="tab-{{ unique_id }}-{{ tab_key }}"
+            id="tab-content-{{ unique_id }}-{{ tab_key }}"
+          >
+            <div class="product-tab-prose-{{ unique_id }}">
+              {{ tab_content }}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </product-tabs-{{ unique_id }}>
+
+  {%- # JavaScript Component -%}
+  <script>
+    class ProductTabs{{ unique_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.init();
+      }
+
+      init() {
+        this.buttons = this.querySelectorAll('.product-tab-button-{{ unique_id }}');
+        this.contents = this.querySelectorAll('.product-tab-content-{{ unique_id }}');
+        
+        this.attachEventListeners();
+        this.setInitialState();
+      }
+
+      attachEventListeners() {
+        this.buttons.forEach(button => {
+          button.addEventListener('click', this.handleTabClick.bind(this));
+          button.addEventListener('keydown', this.handleKeyDown.bind(this));
+        });
+      }
+
+      setInitialState() {
+        const firstTab = this.buttons[0]?.dataset.tab;
+        if (firstTab) {
+          this.activateTab(firstTab);
+        }
+      }
+
+      handleTabClick(event) {
+        const targetTab = event.target.dataset.tab;
+        this.activateTab(targetTab);
+      }
+
+      handleKeyDown(event) {
+        const currentIndex = Array.from(this.buttons).indexOf(event.target);
+        let newIndex;
+
+        switch (event.key) {
+          case 'ArrowLeft':
+            event.preventDefault();
+            newIndex = currentIndex > 0 ? currentIndex - 1 : this.buttons.length - 1;
+            break;
+          case 'ArrowRight':
+            event.preventDefault();
+            newIndex = currentIndex < this.buttons.length - 1 ? currentIndex + 1 : 0;
+            break;
+          case 'Home':
+            event.preventDefault();
+            newIndex = 0;
+            break;
+          case 'End':
+            event.preventDefault();
+            newIndex = this.buttons.length - 1;
+            break;
+          default:
+            return;
+        }
+
+        this.buttons[newIndex].focus();
+        this.activateTab(this.buttons[newIndex].dataset.tab);
+      }
+
+      activateTab(tabKey) {
+        // Update button states
+        this.buttons.forEach(button => {
+          const isActive = button.dataset.tab === tabKey;
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-selected', isActive.toString());
+          button.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+
+        // Update content states
+        this.contents.forEach(content => {
+          const isActive = content.dataset.tabContent === tabKey;
+          content.classList.toggle('active', isActive);
+          content.setAttribute('aria-hidden', (!isActive).toString());
+        });
+      }
+    }
+
+    // Register the custom element
+    if (!customElements.get('product-tabs-{{ unique_id }}')) {
+      customElements.define('product-tabs-{{ unique_id }}', ProductTabs{{ unique_id }});
+    }
+  </script>
+{%- endif -%}

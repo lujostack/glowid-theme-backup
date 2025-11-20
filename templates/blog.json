@@ -1,0 +1,50 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "color_scheme": "",
+        "show_blog_title": true,
+        "show_rss_feed": false,
+        "show_tags": false,
+        "posts_per_page": 12,
+        "feature_first_blog_post": true,
+        "featured_blog_post_color_scheme": "",
+        "show_category": false,
+        "show_date": false,
+        "show_excerpt": true,
+        "show_read_more": true
+      }
+    },
+    "164457077523d6935d": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "separate_section_with_border": true,
+        "color_scheme": "",
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_count": 9,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Senast besökta",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "164457077523d6935d"
+  ]
+}

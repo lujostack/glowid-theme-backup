@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_9KAhFh": {
+      "type": "slideshow",
+      "blocks": {
+        "image_rMhma8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Underrubrik_1920_x_500_px.png",
+            "mobile_image": "shopify://shop_images/Underrubrik.png",
+            "subheading": "",
+            "title": "",
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_2_text": "",
+            "button_2_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_rMhma8"
+      ],
+      "settings": {
+        "autoplay": true,
+        "cycle_speed": 5
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "custom_css": [],
+      "settings": {
+        "show_sort_by": true,
+        "show_filters": true
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "title": "Du har tidigare tittat på"
+      }
+    },
+    "collection-banner": {
+      "type": "collection-banner",
+      "settings": {}
+    }
+  },
+  "order": [
+    "collection-banner",
+    "slideshow_9KAhFh",
+    "main",
+    "recently-viewed-products"
+  ]
+}

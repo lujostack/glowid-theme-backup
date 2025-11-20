@@ -1,0 +1,229 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "ce7d3ba6-c4b1-47ef-b936-65953f85d268": {
+      "type": "slideshow",
+      "blocks": {
+        "image_GeQYKP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1_kopia_5c3b963d-fd49-4d88-a3e4-2ca5c3603b5e.png",
+            "mobile_image": "shopify://shop_images/1_kopia_575ac8a0-0dba-4149-9081-c87fc4d94be3.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_GeQYKP"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "xs",
+        "show_initial_transition": false,
+        "autoplay": false,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_YBpHkT": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_PVbrqi": {
+          "type": "heading",
+          "settings": {
+            "text": "Hi Beauty!",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_mFVQQY": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>We’re SO excited you’ve got your glow game-changer in your hands! Get ready for calm, strengthened skin with the power of centella asiatica and the nourishing hug of propolis. This formula is all about bringing out that natural, healthy glow—like you’ve just had the best night’s sleep, leaving you dewy and refreshed from the inside out!<br/><br/>Ready to dive in? Check out our tutorials below to make the most of your new glow bestie. <br/><br/>Get, Set - Glow! ✨</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_PVbrqi",
+        "richtext_mFVQQY"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "xs",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "91043cf2-4396-4e8d-afd2-cc06fb083ee4": {
+      "type": "slideshow",
+      "blocks": {
+        "template--15646920868026__91043cf2-4396-4e8d-afd2-cc06fb083ee4-image-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2_kopia_2e40d27b-1bc4-4936-93b9-89a097627381.png",
+            "mobile_image": "shopify://shop_images/2_kopia_8922ca83-10a6-48fb-b336-825bcab48c69.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(54, 54, 54, 0.2) 0%, rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "template--15646920868026__91043cf2-4396-4e8d-afd2-cc06fb083ee4-image-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": false,
+        "media_size": "auto",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "video_zAaMNH": {
+      "type": "video",
+      "settings": {
+        "autoplay": true,
+        "show_controls": false,
+        "video_size": "fill",
+        "external_video_url": "https://vimeo.com/1035617067",
+        "text_color": "#ffffff"
+      }
+    },
+    "featured_product_79jbLz": {
+      "type": "featured-product",
+      "blocks": {
+        "vendor_jqBLtt": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title_K7EiQi": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h3"
+          }
+        },
+        "price_8zwCCe": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "separator_6w6gVF": {
+          "type": "separator",
+          "settings": {}
+        },
+        "share_buttons_gVVpDX": {
+          "type": "share_buttons",
+          "settings": {}
+        },
+        "buy_buttons_9cNrFQ": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true,
+            "show_gift_card_recipient": true,
+            "atc_button_background": "",
+            "atc_button_text_color": "",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "vendor_jqBLtt",
+        "title_K7EiQi",
+        "price_8zwCCe",
+        "separator_6w6gVF",
+        "share_buttons_gVVpDX",
+        "buy_buttons_9cNrFQ"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "product": "glowid-glass-skin-drops",
+        "separate_section_with_border": true,
+        "container_size": "lg",
+        "product_info_size": 45,
+        "center_basic_info": true,
+        "desktop_media_layout": "carousel_thumbnails_bottom",
+        "desktop_media_grid_gap": 30,
+        "mobile_controls": "dots",
+        "enable_media_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": false,
+        "max_image_zoom_level": 3,
+        "subheading": "",
+        "title": "Shop here!",
+        "content": ""
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    }
+  },
+  "order": [
+    "ce7d3ba6-c4b1-47ef-b936-65953f85d268",
+    "rich_text_YBpHkT",
+    "91043cf2-4396-4e8d-afd2-cc06fb083ee4",
+    "video_zAaMNH",
+    "featured_product_79jbLz",
+    "main"
+  ]
+}

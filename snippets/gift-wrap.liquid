@@ -1,0 +1,505 @@
+{% comment %} Gift Wrap Selection - Works like Free Gift System {% endcomment %}
+{% assign has_gift_wrap_enabled = false %}
+{% if settings.gwp_enable_gift_wrap %}
+  {% assign has_gift_wrap_enabled = true %}
+{% endif %}
+
+{% comment %} Check if any gift wrap is already selected {% endcomment %}
+{% assign has_gift_wrap_in_cart = false %}
+{% if cart.attributes._gift_wrap_type %}
+  {% assign has_gift_wrap_in_cart = true %}
+{% endif %}
+
+{% comment %} Check if gift wrap was declined {% endcomment %}
+{% assign gift_wrap_declined = false %}
+{% if cart.attributes._gift_wrap_declined %}
+  {% assign gift_wrap_declined = true %}
+{% endif %}
+
+{% comment %} DEBUG: Add debug output to identify issues {% endcomment %}
+<!-- DEBUG GIFT WRAP:
+  gwp_enable_gift_wrap: {{ settings.gwp_enable_gift_wrap }}
+  has_gift_wrap_enabled: {{ has_gift_wrap_enabled }}
+  has_gift_wrap_in_cart: {{ has_gift_wrap_in_cart }}
+  gift_wrap_declined: {{ gift_wrap_declined }}
+  gwp_grap_text: {{ settings.gwp_grap_text }}
+  gwp_signature_title: {{ settings.gwp_signature_title }}
+  gwp_eco_title: {{ settings.gwp_eco_title }}
+  cart.attributes._gift_wrap_type: {{ cart.attributes._gift_wrap_type }}
+  cart.attributes._gift_wrap_declined: {{ cart.attributes._gift_wrap_declined }}
+-->
+
+{% comment %} Show gift wrap options if enabled, not already in cart, and not declined {% endcomment %}
+{% comment %} For debugging: when gift wrap is enabled, ignore declined state to allow testing {% endcomment %}
+{% comment %} TODO: For REMOVE THIS AND GIVE USERS A WAY TO GET THE OPTION BACK {% endcomment %}
+{% assign ignore_declined_for_debug = true %}
+{% if has_gift_wrap_enabled and has_gift_wrap_in_cart == false %}
+  {% if ignore_declined_for_debug or gift_wrap_declined == false %}
+  <div class="cart-drawer__gift-wrap">
+    <h2 class="h4">{{ settings.gwp_wrapping_title | default: "Add Gift Wrapping" }}</h2>
+    <div class="grid grid-cols-3 gap-4" style="text-align:center;">
+
+      {% comment %} Gift Wrap Option - Show even if not fully configured {% endcomment %}
+      <div class="grid__item">
+        <div class="gift-wrap-option">
+          <div class="gift-wrap-option__image">
+            {% if settings.gwp_image_first %}
+              {{- settings.gwp_image_first | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '200px', widths: '200,400', alt: settings.gwp_grap_text -}}
+            {% else %}
+              <div class="gift-wrap-placeholder">🎁</div>
+            {% endif %}
+          </div>
+          <div class="gift-wrap-option__content">
+            <p><strong>{{ settings.gwp_grap_text | default: "Gift Wrapping" }}</strong></p>
+            {% if settings.gwp_grap_desc %}
+              <p class="text-sm text-subdued">{{ settings.gwp_grap_desc }}</p>
+            {% endif %}
+            <button type="button" onclick="addGiftWrap('gift-wrap')" class="button button--secondary button--small">{{ settings.gwp_gift_checkbox | default: "Add Gift Wrap" }}</button>
+          </div>
+        </div>
+      </div>
+
+      {% comment %} Signature Option - Show even if not fully configured {% endcomment %}
+      <div class="grid__item">
+        <div class="gift-wrap-option">
+          <div class="gift-wrap-option__image">
+            {% if settings.gwp_signature_image %}
+              {{- settings.gwp_signature_image | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '200px', widths: '200,400', alt: settings.gwp_signature_title -}}
+            {% else %}
+              <div class="gift-wrap-placeholder">✍️</div>
+            {% endif %}
+          </div>
+          <div class="gift-wrap-option__content">
+            <p><strong>{{ settings.gwp_signature_title | default: "Signature Card" }}</strong></p>
+            {% if settings.gwp_signature_text %}
+              <p class="text-sm text-subdued">{{ settings.gwp_signature_text }}</p>
+            {% endif %}
+            <button type="button" onclick="showSignatureInput()" class="button button--secondary button--small">{{ settings.gwp_signature_checkbox | default: "Add Signature" }}</button>
+
+            <!-- Signature message input (hidden by default) -->
+            <div class="signature-input-container" style="display: none; margin-top: 1rem;">
+              <label for="signature-message" class="text-sm">Your message:</label>
+              <textarea
+                id="signature-message"
+                placeholder="Enter your personalized message here..."
+                maxlength="200"
+                rows="3"
+                style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.875rem; margin-top: 0.25rem;"
+              ></textarea>
+              <div class="button-group" style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
+                <button type="button" onclick="addSignatureWithMessage()" class="button button--secondary button--small">Add Signature</button>
+                <button type="button" onclick="hideSignatureInput()" class="button button--outline button--small">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% comment %} Eco Option - Show even if not fully configured {% endcomment %}
+      <div class="grid__item">
+        <div class="gift-wrap-option">
+          <div class="gift-wrap-option__image">
+            {% if settings.gwp_eco_image %}
+              {{- settings.gwp_eco_image | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '200px', widths: '200,400', alt: settings.gwp_eco_title -}}
+            {% else %}
+              <div class="gift-wrap-placeholder">🌱</div>
+            {% endif %}
+          </div>
+          <div class="gift-wrap-option__content">
+            <p><strong>{{ settings.gwp_eco_title | default: "Eco Packaging" }}</strong></p>
+            {% if settings.gwp_eco_text %}
+              <p class="text-sm text-subdued">{{ settings.gwp_eco_text }}</p>
+            {% endif %}
+            <button type="button" onclick="addGiftWrap('eco')" class="button button--secondary button--small">{{ settings.gwp_eco_checkbox | default: "Add Eco Pack" }}</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {% comment %} No Thanks Option {% endcomment %}
+    <div class="text-center" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--gift-section-border, #f3f3f3);">
+      <button type="button" onclick="declineGiftWrap()" class="button button--secondary button--small">No thanks</button>
+    </div>
+  </div>
+  {% endif %}
+{% endif %}
+
+{% comment %} Gift Wrap Line Item Display {% endcomment %}
+{% if has_gift_wrap_in_cart %}
+  <div class="cart-drawer__gift-wrap-item">
+    <div class="gift-wrap-selected">
+      <div class="gift-wrap-selected__content">
+        {% comment %} Show selected gift wrap image {% endcomment %}
+        {% assign selected_image = null %}
+        {% case cart.attributes._gift_wrap_type %}
+          {% when 'gift-wrap' %}
+            {% assign selected_image = settings.gwp_image_first %}
+          {% when 'signature' %}
+            {% assign selected_image = settings.gwp_signature_image %}
+          {% when 'eco' %}
+            {% assign selected_image = settings.gwp_eco_image %}
+        {% endcase %}
+
+        {% if selected_image %}
+          <div class="gift-wrap-selected__image">
+            {{- selected_image | image_url: width: 80 | image_tag: loading: 'lazy', sizes: '80px', widths: '80,160', alt: cart.attributes._gift_wrap_name -}}
+          </div>
+        {% endif %}
+
+        <div class="gift-wrap-selected__details">
+          <h3 class="h5">✅ Gift Wrapping Added</h3>
+          <p><strong>{{ cart.attributes._gift_wrap_name | default: cart.attributes._gift_wrap_type | capitalize }}</strong></p>
+          {% if cart.attributes._gift_wrap_description %}
+            <p class="text-sm">{{ cart.attributes._gift_wrap_description }}</p>
+          {% endif %}
+          {% if cart.attributes._signature_message %}
+            <div class="signature-message-display" style="margin-top: 0.5rem; padding: 0.5rem; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #007bff;">
+              <p class="text-sm"><strong>Your message:</strong></p>
+              <p class="text-sm" style="font-style: italic;">"{{ cart.attributes._signature_message }}"</p>
+            </div>
+          {% endif %}
+          <button type="button" onclick="removeGiftWrap()" class="button button--secondary button--small">Remove Gift Wrap</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% comment %} Auto-clear declined state for debugging when gift wrap is enabled {% endcomment %}
+{% if settings.gwp_enable_gift_wrap and cart.attributes._gift_wrap_declined %}
+<script>
+  // Automatically clear declined state when gift wrapping is enabled (for debugging)
+  fetch('/cart/update.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      attributes: {
+        '_gift_wrap_declined': ''
+      }
+    })
+  })
+  .then(response => response.json())
+  .then(cart => {
+    console.log('Auto-cleared declined state for debugging');
+    // Refresh to show gift wrap options
+    if (window.location.pathname === '/cart') {
+      window.location.reload();
+    } else {
+      document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+    }
+  })
+  .catch(error => {
+    console.error('Error clearing declined state:', error);
+  });
+</script>
+{% endif %}
+
+<script>
+
+  function addGiftWrap(wrapType) {
+    // Hide gift wrap selection UI immediately for better UX
+    const giftWrapContainer = document.querySelector('.cart-drawer__gift-wrap');
+    if (giftWrapContainer) {
+      giftWrapContainer.style.display = 'none';
+    }
+
+    // Create a simple gift wrap line item using cart attributes
+    const giftWrapData = {
+      'gift-wrap': 'Gift Wrapping Service',
+      signature: 'Signature Card Service',
+      eco: 'Eco-Friendly Packaging'
+    };
+
+    const giftWrapDescriptions = {
+      'gift-wrap': '{{ settings.gwp_grap_desc | default: "Beautiful gift wrapping" }}',
+      signature: '{{ settings.gwp_signature_text | default: "Personalized signature card" }}',
+      eco: '{{ settings.gwp_eco_text | default: "Eco-friendly packaging" }}'
+    };
+
+    // Use cart attributes to store gift wrap selection (no need for products)
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        attributes: {
+          '_gift_wrap_type': wrapType,
+          '_gift_wrap_name': giftWrapData[wrapType],
+          '_gift_wrap_description': giftWrapDescriptions[wrapType]
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(cart => {
+      // Check if we're on the main cart page
+      if (window.location.pathname === '/cart') {
+        // Reload the main cart page
+        window.location.reload();
+      } else {
+        // Refresh the cart drawer to show the selection
+        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+      }
+      console.log('Gift wrap added successfully');
+    })
+    .catch(error => {
+      console.error('Error adding gift wrap:', error);
+      // Show the selection UI again if there was an error
+      if (giftWrapContainer) {
+        giftWrapContainer.style.display = 'block';
+      }
+    });
+
+    return false;
+  }
+
+  function showSignatureInput() {
+    const signatureContainer = document.querySelector('.signature-input-container');
+    const signatureButton = document.querySelector('.gift-wrap-option:nth-child(2) button');
+
+    if (signatureContainer) {
+      signatureContainer.style.display = 'block';
+    }
+    if (signatureButton) {
+      signatureButton.style.display = 'none';
+    }
+  }
+
+  function hideSignatureInput() {
+    const signatureContainer = document.querySelector('.signature-input-container');
+    const signatureButton = document.querySelector('.gift-wrap-option:nth-child(2) button');
+    const messageInput = document.getElementById('signature-message');
+
+    if (signatureContainer) {
+      signatureContainer.style.display = 'none';
+    }
+    if (signatureButton) {
+      signatureButton.style.display = 'inline-block';
+    }
+    if (messageInput) {
+      messageInput.value = '';
+    }
+  }
+
+  function addSignatureWithMessage() {
+    const messageInput = document.getElementById('signature-message');
+    const customMessage = messageInput ? messageInput.value.trim() : '';
+
+    // Hide gift wrap selection UI immediately for better UX
+    const giftWrapContainer = document.querySelector('.cart-drawer__gift-wrap');
+    if (giftWrapContainer) {
+      giftWrapContainer.style.display = 'none';
+    }
+
+    const signatureName = customMessage ? 'Signature Card with Custom Message' : 'Signature Card Service';
+    const signatureDescription = customMessage ? customMessage : '{{ settings.gwp_signature_text | default: "Personalized signature card" }}';
+
+    // Use cart attributes to store signature selection with custom message
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        attributes: {
+          '_gift_wrap_type': 'signature',
+          '_gift_wrap_name': signatureName,
+          '_gift_wrap_description': signatureDescription,
+          '_signature_message': customMessage
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(cart => {
+      // Check if we're on the main cart page
+      if (window.location.pathname === '/cart') {
+        // Reload the main cart page
+        window.location.reload();
+      } else {
+        // Refresh the cart drawer to show the selection
+        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+      }
+      console.log('Signature added successfully');
+    })
+    .catch(error => {
+      console.error('Error adding signature:', error);
+      // Show the selection UI again if there was an error
+      if (giftWrapContainer) {
+        giftWrapContainer.style.display = 'block';
+      }
+    });
+
+    return false;
+  }
+
+  function removeGiftWrap() {
+    // Remove gift wrap attributes
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        attributes: {
+          '_gift_wrap_type': '',
+          '_gift_wrap_name': '',
+          '_gift_wrap_description': '',
+          '_signature_message': ''
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(cart => {
+      // Check if we're on the main cart page
+      if (window.location.pathname === '/cart') {
+        // Reload the main cart page
+        window.location.reload();
+      } else {
+        // Refresh the cart drawer
+        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+      }
+      console.log('Gift wrap removed successfully');
+    })
+    .catch(error => {
+      console.error('Error removing gift wrap:', error);
+    });
+
+    return false;
+  }
+
+  function declineGiftWrap() {
+    // Hide the gift wrap UI and set a decline flag
+    const giftWrapContainer = document.querySelector('.cart-drawer__gift-wrap');
+    if (giftWrapContainer) {
+      giftWrapContainer.style.display = 'none';
+    }
+
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        attributes: {
+          '_gift_wrap_declined': 'true'
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(cart => {
+      // Check if we're on the main cart page
+      if (window.location.pathname === '/cart') {
+        // Reload the main cart page to hide the gift wrap UI
+        window.location.reload();
+      }
+      console.log('Gift wrap declined');
+    })
+    .catch(error => {
+      console.error('Error declining gift wrap:', error);
+    });
+
+    return false;
+  }
+</script>
+
+<style>
+  .cart-drawer__gift-wrap {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    border: 1px solid var(--gift-section-border, #f3f3f3);
+    border-radius: 8px;
+    background: var(--gift-section-background, #fafafa);
+  }
+
+  .gift-wrap-option {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background: white;
+    transition: all 0.2s ease;
+  }
+
+  .gift-wrap-option:hover {
+    border-color: var(--gift-button-background, #e7a1b0);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .gift-wrap-option__image {
+    margin-bottom: 0.75rem;
+  }
+
+  .gift-wrap-option__image img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .gift-wrap-placeholder {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin: 0 auto;
+  }
+
+  .gift-wrap-option__content p {
+    margin: 0.5rem 0;
+    font-size: 0.875rem;
+  }
+
+  .cart-drawer__gift-wrap-item {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #e8f5e8;
+    border-radius: 8px;
+    border: 1px solid #d4edda;
+  }
+
+  .gift-wrap-selected__content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .gift-wrap-selected__image {
+    flex-shrink: 0;
+  }
+
+  .gift-wrap-selected__image img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 2px solid #28a745;
+  }
+
+  .gift-wrap-selected__details {
+    flex: 1;
+  }
+
+  .gift-wrap-selected h3,
+  .gift-wrap-selected__details h3 {
+    color: #155724;
+    margin-bottom: 0.5rem;
+  }
+
+  .gift-wrap-selected p,
+  .gift-wrap-selected__details p {
+    color: #155724;
+    margin-bottom: 0.5rem;
+  }
+
+  .gift-wrap-selected__details p:last-of-type {
+    margin-bottom: 1rem;
+  }
+</style>

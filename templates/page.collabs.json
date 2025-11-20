@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collabs": {
+      "type": "apps",
+      "blocks": {
+        "02ca2da2-54ad-417b-a13a-f5e78f19c73e": {
+          "type": "shopify://apps/collabs/blocks/application-page/54758706-9f25-4fa9-a553-64720a4c998b",
+          "settings": {
+            "heading": "Let’s GLOW together!",
+            "button_text": "Ansök Nu",
+            "button_background_color": "#f9b3e4",
+            "button_label_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "02ca2da2-54ad-417b-a13a-f5e78f19c73e"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "collabs"
+  ]
+}
