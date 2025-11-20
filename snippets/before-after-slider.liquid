@@ -1,0 +1,252 @@
+{%- doc -%}
+  BEFORE-AFTER SLIDER SNIPPET
+  Reusable component extracted from before-after section
+
+  Parameters:
+
+  @param {object} [before_image] - : image object for "before" side
+  @param {object} [after_image] - : image object for "after" side
+  @param {string} [cursor_direction] - : 'horizontal' or 'vertical' (default: 'horizontal')
+  @param {number} [initial_position] - : 0-100 (default: 50)
+  @param {string} [cursor_background] - : hex color (default: '#ffffff')
+  @param {string} [cursor_arrows_color] - : hex color (default: '#000000')
+  @param {number} [aspect_ratio] - : number or fraction string (default: 1)
+  @param {string} [unique_id] - : unique identifier for this instance (required)
+{%- enddoc -%}
+
+{%- liquid
+  assign cursor_direction = cursor_direction | default: 'horizontal'
+  assign initial_position = initial_position | default: 50
+  assign cursor_background = cursor_background | default: '#ffffff'
+  assign cursor_arrows_color = cursor_arrows_color | default: '#000000'
+  assign aspect_ratio = aspect_ratio | default: blank
+  assign ba_id = unique_id | default: 'ba-' | append: 'now' | date: '%s'
+-%}
+
+{% stylesheet %}
+  .before-after__cursor.is-snippet:before {
+    background-color: #fff;
+  }
+
+  .before-after__after-image.is-snippet {
+    z-index: auto;
+  }
+
+  .before-after-static__image_aspect {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 649px) {
+    .before-after-static__image_aspect {
+      aspect-ratio: auto;
+      object-fit: cover;
+    }
+  }
+{% endstylesheet %}
+
+<style>
+  .before-after-static__image_aspect {
+    {% if aspect_ratio != blank %}
+        aspect-ratio: {{ aspect_ratio }};
+        object-fit: cover;
+    {% endif %}
+  }
+  /* ==== Variabler för denna instans ==== */
+  [data-ba-id="{{ ba_id }}"] {
+    --before-after-initial-cursor-position: {{ initial_position }}%;
+    --before-after-cursor-background: {{ cursor_background }};
+  }
+
+  /* ==== Egen maskning (oberöende av temats drag) ==== */
+  [data-ba-id="{{ ba_id }}"] .before-after__after-image{
+    --ba-pct: var(--before-after-initial-cursor-position, 50%);
+    will-change: clip-path;
+  }
+  /* Horisontellt läge */
+  [data-ba-id="{{ ba_id }}"][data-ba-vertical="false"] .before-after__after-image{
+    clip-path: inset(0 calc(100% - var(--ba-pct)) 0 0);
+  }
+  /* Vertikalt läge */
+  [data-ba-id="{{ ba_id }}"][data-ba-vertical="true"] .before-after__after-image{
+    clip-path: inset(calc(100% - var(--ba-pct)) 0 0 0);
+  }
+
+  /* ==== Touch/drag-säkerhet ==== */
+  [data-ba-id="{{ ba_id }}"] .before-after__cursor {
+    touch-action: none;
+    cursor: grab;
+  }
+  [data-ba-id="{{ ba_id }}"] .before-after__cursor:active {
+    cursor: grabbing;
+  }
+
+  /* Undvik iOS bild-drag/markering */
+  [data-ba-id="{{ ba_id }}"] .before-after img{ -webkit-user-drag:none; user-select:none; }
+
+  /* Sätt cursorn synligt överst */
+  [data-ba-id="{{ ba_id }}"] .before-after__cursor{ z-index:4; }
+</style>
+
+<script>
+  (function () {
+    const baId = '{{ ba_id }}';
+    const root = document.querySelector('[data-ba-id="' + baId + '"]');
+    const slider = root && root.querySelector('before-after');
+    if (!slider) return;
+
+    const afterEl = slider.querySelector('.before-after__after-image');
+    const cursor = slider.querySelector('.before-after__cursor');
+
+    // Sätt riktning
+    const vertical = slider.hasAttribute('vertical');
+    root.dataset.baVertical = vertical ? 'true' : 'false';
+
+    // Initiera procent
+    let pct = parseFloat(getComputedStyle(root).getPropertyValue('--before-after-initial-cursor-position')) || 50;
+    apply(pct);
+
+    function clamp(v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    function getPercentFromPoint(clientX, clientY) {
+      const rect = slider.getBoundingClientRect();
+      if (vertical) {
+        const p = ((clientY - rect.top) / rect.height) * 100;
+        return clamp(p, 0, 100);
+      } else {
+        const p = ((clientX - rect.left) / rect.width) * 100;
+        return clamp(p, 0, 100);
+      }
+    }
+
+    function apply(p) {
+      root.style.setProperty('--ba-pct', p + '%');
+      if (cursor) {
+        if (vertical) {
+          cursor.style.top = p + '%';
+          cursor.style.left = '';
+        } else {
+          cursor.style.left = p + '%';
+          cursor.style.top = '';
+        }
+      }
+    }
+
+    // Drag-hantering
+    let startX = 0,
+      startY = 0,
+      startPct = 0,
+      dragging = false;
+
+    function hasHorizontalIntent(x, y, sx, sy) {
+      const dx = Math.abs(x - sx),
+        dy = Math.abs(y - sy);
+      return vertical ? dy > dx && dy > 3 : dx > dy && dx > 3;
+    }
+
+    function onStart(e) {
+      if (!cursor) return;
+      const t = e.touches ? e.touches[0] : e;
+      startX = t.clientX;
+      startY = t.clientY;
+      startPct = pct;
+      dragging = false;
+      // Optionally snap to cursor position on initial touch
+      pct = getPercentFromPoint(t.clientX, t.clientY);
+      apply(pct);
+    }
+
+    function onMove(e) {
+      if (!cursor) return;
+      const t = e.touches ? e.touches[0] : e;
+      if (!dragging) {
+        if (e.touches && !hasHorizontalIntent(t.clientX, t.clientY, startX, startY)) return;
+        dragging = true;
+      }
+      if (e.cancelable) e.preventDefault();
+      pct = getPercentFromPoint(t.clientX, t.clientY);
+      apply(pct);
+    }
+
+    function onEnd() {
+      dragging = false;
+    }
+
+    // Attach listeners only to cursor, not the entire slider
+    if (!cursor) return;
+
+    cursor.addEventListener('touchstart', onStart, { passive: true });
+    cursor.addEventListener('touchmove', onMove, { passive: false });
+    cursor.addEventListener('touchend', onEnd, { passive: true });
+    cursor.addEventListener('touchcancel', onEnd, { passive: true });
+
+    cursor.addEventListener('pointerdown', onStart);
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onEnd);
+    document.addEventListener('pointercancel', onEnd);
+
+    cursor.addEventListener('mousedown', onStart);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+  })();
+</script>
+
+<div
+  data-ba-id="{{ ba_id }}"
+  {% if aspect_ratio != blank %}
+    style="aspect-ratio: {{ aspect_ratio }};"
+  {% endif %}
+>
+  <before-after
+    class="before-after before-after--{{ cursor_direction }}"
+    {% if cursor_direction == 'vertical' %}
+      vertical
+    {% endif %}
+  >
+    <div class="before-after__before-image is-snippet">
+      {%- if before_image -%}
+        {{-
+          before_image
+          | image_url: width: 1600
+          | image_tag:
+            sizes: '100vw',
+            widths: '800,1000,1400,1600,2000,2400',
+            class: 'w-full before-after-static__image_aspect',
+            draggable: false,
+            loading: 'lazy'
+        -}}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="before-after__after-image is-snippet">
+      {%- if after_image -%}
+        {{-
+          after_image
+          | image_url: width: 1600
+          | image_tag:
+            sizes: '100vw',
+            widths: '800,1000,1400,1600,2000,2400',
+            class: 'w-full before-after-static__image_aspect',
+            draggable: false,
+            loading: 'lazy'
+        -}}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="before-after__cursor is-snippet" tabindex="0">
+      <span class="sr-only">{{ 'sections.before_after.cursor_accessibility_text' | t }}</span>
+      <svg role="presentation" focusable="false" fill="none" width="50" height="50" viewBox="0 0 50 50">
+        <g {% if cursor_direction == 'vertical' %}transform="rotate(90, 25, 25)"{% endif %}>
+          <rect width="50" height="50" rx="25" fill="{{ cursor_background }}"/>
+          <path d="m19.25 19-6 6 6 6m11.5 0 6-6-6-6" stroke="{{ cursor_arrows_color }}" stroke-width=".75" stroke-linecap="square"/>
+        </g>
+      </svg>
+    </div>
+  </before-after>
+</div>

@@ -1,40 +1,73 @@
 {%- comment -%}
-----------------------------------------------------------------------------------------------------------------------
-PRODUCT GALLERY COMPONENT
-----------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------------
+  PRODUCT GALLERY COMPONENT
+  ----------------------------------------------------------------------------------------------------------------------
 
-This component is used to show the product gallery (used in product page and featured product section)
+  This component is used to show the product gallery (used in product page and featured product section)
 
-********************************************
-Supported variables
-********************************************
+  ********************************************
+  Supported variables
+  ********************************************
 
-* product: the product to render (if empty, renders placeholder content)
-* product_form_id: the product form id
-* desktop_layout: the layout on desktop (can be "carousel_thumbnails_left", "carousel_thumbnails_bottom", "carousel_dots", "grid", "grid_2x" or "grid_2x_highlighted")
-* mobile_controls: the controls to show on mobile (can be "thumbnails", "dots", "arrows" or "free_scroll")
-* enable_media_autoplay: if set to true media are autoplayed when switched to
-* enable_video_looping: if set to true videos automatically loop when finished
-* enable_image_zoom: if set to true the gallery allow zoom
-* max_image_zoom_level: the maximum zoom level allowed (if enabled)
+  * product: the product to render (if empty, renders placeholder content)
+  * product_form_id: the product form id
+  * desktop_layout: the layout on desktop (can be "carousel_thumbnails_left", "carousel_thumbnails_bottom", "carousel_dots", "grid", "grid_2x" or "grid_2x_highlighted")
+  * mobile_controls: the controls to show on mobile (can be "thumbnails", "dots", "arrows" or "free_scroll")
+  * enable_media_autoplay: if set to true media are autoplayed when switched to
+  * enable_video_looping: if set to true videos automatically loop when finished
+  * enable_image_zoom: if set to true the gallery allow zoom
+  * max_image_zoom_level: the maximum zoom level allowed (if enabled)
 {%- endcomment -%}
 
 {% comment %}
-For mobile viewports (≤649px), ensure the scroll-carousel snaps media to the
-leading edge so the next slide remains visible. Hardcoded for now, might add settings later; 
-fix verified 20 Nov 2025.
+  For mobile viewports (≤649px), ensure the scroll-carousel snaps media to the
+  leading edge so the next slide remains visible. Hardcoded for now, might add settings later;
+  fix verified 20 Nov 2025.
 {% endcomment %}
 {% stylesheet %}
-@media screen and (max-width: 649px) {
-  scroll-carousel {
-    --product-gallery-carousel-grid: auto / auto-flow 90%;
-    --product-gallery-carousel-gap: 0.75rem;
+  @media screen and (max-width: 649px) {
+    scroll-carousel {
+      --product-gallery-carousel-grid: auto / auto-flow 90%;
+      --product-gallery-carousel-gap: 0.75rem;
+    }
+
+    .product-gallery__media.snap-center {
+      scroll-snap-align: start;
+    }
   }
 
-  .product-gallery__media.snap-center  {
-    scroll-snap-align: start;
+  /* Before/after static image for the desktop preview of the slides */
+  .before-after-static {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
   }
-}
+
+  .before-after-static__image-container {
+    width: 50%;
+    height: 100%;
+    border-right: 0.75px solid #fff;
+  }
+
+  .before-after-static__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .before-after-static__image.before {
+    clip-path: inset(0 50% 0 0); /* show left half */
+    z-index: -1;
+  }
+
+  .before-after-static__image.after {
+    clip-path: inset(0 0 0 50%); /* show right half */
+    z-index: -1;
+  }
 {% endstylesheet %}
 
 <style>
@@ -80,11 +113,11 @@ fix verified 20 Nov 2025.
 </style>
 
 {%- comment -%}
-IMPLEMENTATION NOTE: Shopify does not natively offer a way to create a set of images per variant. This is often
-pretty limited when you have a lot of colors and would like to only see the images specific to a given color. To
-goes around that, Prestige offers a hack using alt tags whose usage is described here: https://support.maestrooo.com/article/721-variant-images-set
-The implementation is rather complex and inefficient due to a lot of string parsings, but it is, unfortunately, the
-only way to do it on Shopify right now.
+  IMPLEMENTATION NOTE: Shopify does not natively offer a way to create a set of images per variant. This is often
+  pretty limited when you have a lot of colors and would like to only see the images specific to a given color. To
+  goes around that, Prestige offers a hack using alt tags whose usage is described here: https://support.maestrooo.com/article/721-variant-images-set
+  The implementation is rather complex and inefficient due to a lot of string parsings, but it is, unfortunately, the
+  only way to do it on Shopify right now.
 {%- endcomment -%}
 
 {% liquid
@@ -110,7 +143,17 @@ only way to do it on Shopify right now.
   endif
 %}
 
-<product-gallery class="product-gallery" form="{{ product_form_id }}" filtered-indexes="{{ filtered_indexes | json }}" {% if enable_media_autoplay %}autoplay-media{% endif %} {% if enable_image_zoom %}allow-zoom="{{ max_image_zoom_level }}"{% endif %}>
+<product-gallery
+  class="product-gallery"
+  form="{{ product_form_id }}"
+  filtered-indexes="{{ filtered_indexes | json }}"
+  {% if enable_media_autoplay %}
+    autoplay-media
+  {% endif %}
+  {% if enable_image_zoom %}
+    allow-zoom="{{ max_image_zoom_level }}"
+  {% endif %}
+>
   {%- if enable_image_zoom -%}
     <open-lightbox-button class="contents">
       <button class="product-gallery__zoom-button circle-button circle-button--sm md:hidden">
@@ -122,9 +165,9 @@ only way to do it on Shopify right now.
 
   <div class="product-gallery__image-list">
     {%- comment -%}
-    ----------------------------------------------------------------------------------------------------------------------
-    CAROUSEL
-    ----------------------------------------------------------------------------------------------------------------------
+      ----------------------------------------------------------------------------------------------------------------------
+      CAROUSEL
+      ----------------------------------------------------------------------------------------------------------------------
     {%- endcomment -%}
 
     <div class="{% if mobile_controls == 'arrows' %}product-gallery__carousel-with-arrows{% else %}contents{% endif %}">
@@ -137,7 +180,12 @@ only way to do it on Shopify right now.
         </carousel-prev-button>
       {%- endif -%}
 
-      <scroll-carousel adaptive-height id="{{ product_gallery_carousel_id }}" class="product-gallery__carousel scroll-area {% unless mobile_controls == 'arrows' %}full-bleed md:unbleed{% endunless %}" role="region">
+      <scroll-carousel
+        adaptive-height
+        id="{{ product_gallery_carousel_id }}"
+        class="product-gallery__carousel scroll-area {% unless mobile_controls == 'arrows' %}full-bleed md:unbleed{% endunless %}"
+        role="region"
+      >
         {%- if product != blank -%}
           {%- liquid
             capture sizes
@@ -165,8 +213,52 @@ only way to do it on Shopify right now.
             endcapture
           -%}
 
+          {% assign before_after_metafield = product.metafields.custom.before_after_slide %}
+          {% if before_after_metafield and before_after_metafield.value %}
+            {% assign slide = before_after_metafield.value %}
+            {% assign slot_index = slide.slot_index | default: 0 %}
+            {% assign before_image = slide.before_image %}
+            {% assign after_image = slide.after_image %}
+
+            <!-- render the injected before/after slide using these variables -->
+          {% endif %}
+
+          {% assign index = 1 %}
           {%- for media in product.media -%}
-            <div class="product-gallery__media snap-center {% if media == default_media %}is-initial{% endif %}" data-media-type="{{ media.media_type }}" data-media-id="{{ media.id }}" role="group" aria-label="{{ 'general.accessibility.item_nth_of_count' | t: index: media.position, count: product.media.size }}" {% if filtered_indexes contains media.position %}hidden{% endif %}>
+            {%- if index == slot_index -%}
+              <div
+                class="product-gallery__media snap-center {% if media == default_media %}is-initial{% endif %}"
+                data-media-type="{{ media.media_type }}"
+                data-media-id="{{ media.id }}"
+                role="group"
+                aria-label="{{ 'general.accessibility.item_nth_of_count' | t: index: media.position, count: product.media.size }}"
+                {% if filtered_indexes contains media.position %}
+                  hidden
+                {% endif %}
+              >
+                {%-
+                  render 'before-after-slider',
+                  before_image: slide.before_image,
+                  after_image: slide.after_image,
+                  cursor_direction: 'horizontal',
+                  initial_position: 50,
+                  cursor_background: '#ffffff',
+                  cursor_arrows_color: '#000000',
+                  aspect_ratio: slide.aspect_ratio,
+                  unique_id: 'product-gallery-ba-' | append: product.id | append: '-' | append: slot_index
+                -%}
+              </div>
+            {% endif %}
+            <div
+              class="product-gallery__media snap-center {% if media == default_media %}is-initial{% endif %}"
+              data-media-type="{{ media.media_type }}"
+              data-media-id="{{ media.id }}"
+              role="group"
+              aria-label="{{ 'general.accessibility.item_nth_of_count' | t: index: media.position, count: product.media.size }}"
+              {% if filtered_indexes contains media.position %}
+                hidden
+              {% endif %}
+            >
               {%- if default_media == media -%}
                 {%- assign preload = true -%}
               {%- else -%}
@@ -174,17 +266,34 @@ only way to do it on Shopify right now.
               {%- endif -%}
 
               {%- comment -%}
-              NOTE: for the product gallery, the autoplay does not work in a similar way. It is always false at the product level,
-              and the product-gallery component itself will autoplay (if needed)
+                NOTE: for the product gallery, the autoplay does not work in a similar way. It is always false at the product level,
+                and the product-gallery component itself will autoplay (if needed)
               {%- endcomment -%}
-              {%- render 'media', media: media, sizes: sizes, preload: preload, controls: true, playsinline: true, muted: enable_media_autoplay, loop: enable_video_looping, group: 'product' -%}
+              {%- render 'media',
+                media: media,
+                sizes: sizes,
+                preload: preload,
+                controls: true,
+                playsinline: true,
+                muted: enable_media_autoplay,
+                loop: enable_video_looping,
+                group: 'product'
+              -%}
             </div>
+            {% assign index = index | plus: 1 %}
           {%- endfor -%}
         {%- else -%}
           {%- for i in (1..3) -%}
             {%- capture placeholder_name -%}product-{{ i }}{%- endcapture -%}
 
-            <div class="product-gallery__media snap-center {% if forloop.first %}is-initial{% endif %}" data-media-type="{{ media.media_type }}" data-media-position="{{ media.position }}" data-media-id="{{ media.id }}" role="group" aria-label="{{ 'general.accessibility.item_nth_of_count' | t: index: forloop.index, count: 3 }}">
+            <div
+              class="product-gallery__media snap-center {% if forloop.first %}is-initial{% endif %}"
+              data-media-type="{{ media.media_type }}"
+              data-media-position="{{ media.position }}"
+              data-media-id="{{ media.id }}"
+              role="group"
+              aria-label="{{ 'general.accessibility.item_nth_of_count' | t: index: forloop.index, count: 3 }}"
+            >
               {{- placeholder_name | placeholder_svg_tag: 'placeholder' -}}
             </div>
           {%- endfor -%}
@@ -202,17 +311,29 @@ only way to do it on Shopify right now.
     </div>
 
     {%- comment -%}
-    ----------------------------------------------------------------------------------------------------------------------
-    VIEW IN YOUR SPACE
-    ----------------------------------------------------------------------------------------------------------------------
+      ----------------------------------------------------------------------------------------------------------------------
+      VIEW IN YOUR SPACE
+      ----------------------------------------------------------------------------------------------------------------------
     {%- endcomment -%}
 
     {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
 
     {%- if first_3d_model -%}
-      <link rel="stylesheet" href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css" media="print" onload="this.media='all'; this.onload = null">
+      <link
+        rel="stylesheet"
+        href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css"
+        media="print"
+        onload="this.media='all'; this.onload = null"
+      >
 
-      <button class="button w-full md:hidden" data-shopify-xr data-shopify-model3d-id="{{ first_3d_model.id }}" data-shopify-model3d-default-id="{{ first_3d_model.id }}" data-shopify-title="{{ product.title | escape }}" data-shopify-xr-hidden>
+      <button
+        class="button w-full md:hidden"
+        data-shopify-xr
+        data-shopify-model3d-id="{{ first_3d_model.id }}"
+        data-shopify-model3d-default-id="{{ first_3d_model.id }}"
+        data-shopify-title="{{ product.title | escape }}"
+        data-shopify-xr-hidden
+      >
         <span class="text-with-icon justify-center">
           {%- render 'icon' with 'media-view-in-space' -%}
           {{- 'product.general.view_in_space' | t -}}
@@ -222,9 +343,9 @@ only way to do it on Shopify right now.
   </div>
 
   {%- comment -%}
-  ----------------------------------------------------------------------------------------------------------------------
-  CONTROLS
-  ----------------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------------------
+    CONTROLS
+    ----------------------------------------------------------------------------------------------------------------------
   {%- endcomment -%}
 
   {%- if product.media.size > 1 or product == blank -%}
@@ -243,11 +364,81 @@ only way to do it on Shopify right now.
 
     {%- if show_thumbnails_mobile or show_thumbnails_desktop -%}
       <safe-sticky class="product-gallery__thumbnail-list {% unless show_thumbnails_mobile %}hidden{% endunless %} {% unless show_thumbnails_desktop %}md:hidden{% else %}md:block{% endunless %}">
-        <product-gallery-navigation align-selected aria-controls="{{ product_gallery_carousel_id }}" class="product-gallery__thumbnail-scroller bleed md:unbleed">
+        <product-gallery-navigation
+          align-selected
+          aria-controls="{{ product_gallery_carousel_id }}"
+          class="product-gallery__thumbnail-scroller bleed md:unbleed"
+        >
           {%- if product != blank -%}
+            {% assign before_after_metafield = product.metafields.custom.before_after_slide %}
+            {% if before_after_metafield and before_after_metafield.value %}
+              {% assign slide = before_after_metafield.value %}
+              {% assign slot_index = slide.slot_index | default: 0 %}
+              {% assign before_image = slide.before_image %}
+              {% assign after_image = slide.after_image %}
+
+              <!-- render the injected before/after slide using these variables -->
+            {% endif %}
+
+            {% assign index = 1 %}
             {%- for media in product.media -%}
-              <button type="button" class="product-gallery__thumbnail" {% if filtered_indexes contains media.position %}hidden{% endif %} data-media-type="{{ media.media_type }}" data-media-position="{{ media.position }}" data-media-id="{{ media.id }}" aria-current="{% if media == default_media %}true{% else %}false{% endif %}" aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}">
-                {{- media | image_url: width: media.preview_image.width | image_tag: sizes: '56px', widths: '56,112,168', class: 'object-contain' -}}
+              {%- if index == slot_index -%}
+                <button
+                  type="button"
+                  class="product-gallery__thumbnail"
+                  {% if filtered_indexes contains media.position %}
+                    hidden
+                  {% endif %}
+                  data-media-type="{{ media.media_type }}"
+                  data-media-position="{{ media.position }}"
+                  data-media-id="{{ media.id }}"
+                  aria-current="{% if media == default_media %}true{% else %}false{% endif %}"
+                  aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}"
+                >
+                  <div
+                    class="before-after-static"
+                    style="aspect-ratio: {{ slide.aspect_ratio | default: before_image.aspect_ratio | default: after_image.aspect_ratio | default: 1 }};"
+                  >
+                    <div class="before-after-static__image-container">
+                      <img
+                        class="before-after-static__image before"
+                        src="{{ before_image | image_url: width: 1600 }}"
+                        alt="{{ before_image.alt | escape }}"
+                        loading="lazy"
+                        width="{{ before_image.width }}"
+                        height="{{ before_image.height }}"
+                      >
+                    </div>
+                    <div style="width: 50%; height: 100%;">
+                      <img
+                        class="before-after-static__image after"
+                        src="{{ after_image | image_url: width: 1600 }}"
+                        alt="{{ after_image.alt | escape }}"
+                        loading="lazy"
+                        width="{{ after_image.width }}"
+                        height="{{ after_image.height }}"
+                      >
+                    </div>
+                  </div>
+                </button>
+              {% endif %}
+              <button
+                type="button"
+                class="product-gallery__thumbnail"
+                {% if filtered_indexes contains media.position %}
+                  hidden
+                {% endif %}
+                data-media-type="{{ media.media_type }}"
+                data-media-position="{{ media.position }}"
+                data-media-id="{{ media.id }}"
+                aria-current="{% if media == default_media %}true{% else %}false{% endif %}"
+                aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}"
+              >
+                {{-
+                  media
+                  | image_url: width: media.preview_image.width
+                  | image_tag: sizes: '56px', widths: '56,112,168', class: 'object-contain'
+                -}}
 
                 {%- unless media.media_type == 'image' -%}
                   <div class="product-gallery__media-badge">
@@ -259,12 +450,18 @@ only way to do it on Shopify right now.
                   </div>
                 {% endunless %}
               </button>
+              {% assign index = index | plus: 1 %}
             {%- endfor -%}
           {%- else -%}
             {%- for i in (1..3) -%}
               {%- capture placeholder_name -%}product-{% cycle '1', '2', '3', '4', '5' %}{%- endcapture -%}
 
-              <button type="button" class="product-gallery__thumbnail" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}">
+              <button
+                type="button"
+                class="product-gallery__thumbnail"
+                aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}"
+              >
                 {{- placeholder_name | placeholder_svg_tag: 'placeholder object-contain' -}}
               </button>
             {%- endfor -%}
@@ -274,10 +471,20 @@ only way to do it on Shopify right now.
     {%- endif -%}
 
     {%- if mobile_controls == 'dots' or desktop_layout == 'carousel_dots' -%}
-      <carousel-navigation class="page-dots align-self-center {% unless mobile_controls == 'dots' %}md-max:hidden{% endunless %} {% unless desktop_layout == 'carousel_dots' %}md:hidden{% endunless %}" aria-controls="{{ product_gallery_carousel_id }}">
+      <carousel-navigation
+        class="page-dots align-self-center {% unless mobile_controls == 'dots' %}md-max:hidden{% endunless %} {% unless desktop_layout == 'carousel_dots' %}md:hidden{% endunless %}"
+        aria-controls="{{ product_gallery_carousel_id }}"
+      >
         {%- if product != blank -%}
           {%- for media in product.media -%}
-            <button type="button" class="tap-area" {% if filtered_indexes contains media.position %}hidden{% endif %} aria-current="{% if media == default_media %}true{% else %}false{% endif %}">
+            <button
+              type="button"
+              class="tap-area"
+              {% if filtered_indexes contains media.position %}
+                hidden
+              {% endif %}
+              aria-current="{% if media == default_media %}true{% else %}false{% endif %}"
+            >
               <span class="sr-only">{{ 'general.accessibility.go_to_item' | t: index: media.position }}</span>
             </button>
           {%- endfor -%}
